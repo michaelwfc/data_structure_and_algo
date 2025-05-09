@@ -9,7 +9,8 @@ usage() {
 }
 
 # This must match the install directory
-LIFT_INSTALL="/usr/local/lift"
+# LIFT_INSTALL="/usr/local/lift"
+LIFT_INSTALL="/e/projects/data_structure_and_algorithm/lift"
 
 # execute on Windows/Linux using "java" but on OS X using "java_home -exec java"
 JAVA="java"
