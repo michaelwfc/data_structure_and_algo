@@ -2,7 +2,7 @@
 
 # this must match the install directory
 # LIFT_LIB="/usr/local/lift/lib"
-LIFT_LIB="/e/projects/data_structure_and_algorithm/lift/lib"
+LIFT_LIB="/e/projects/data_structure_and_algorithm/coursera_algorithms_labs/.lift"
 
 # sets the path to the textbook libraries
 CLASSPATH=".:${LIFT_LIB}/algs4.jar"

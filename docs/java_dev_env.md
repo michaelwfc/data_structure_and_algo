@@ -1,31 +1,77 @@
-- https://coursera.cs.princeton.edu/algs4/assignments/hello/specification.php
-- https://lift.cs.princeton.edu/java/windows/
+- [programming assignment specification](]https://coursera.cs.princeton.edu/algs4/assignments/hello/specification.php)
+- [Assessment Guide](https://www.coursera.org/learn/algorithms-part1/resources/R2mre)
+
   
+# Java programming environment on windows
+[Java programming environment on windows](https://lift.cs.princeton.edu/java/windows/)
+ 
+##  0.   Install the Java Programming Environment
+##  1.   Open a Project in IntelliJ
+
+##  2.   Create a Program in IntelliJ
+
+##  3.   Compile and Execute the Program (from IntelliJ)
+
+## 4.   Compile and Execute the Program (from the command line)
+
+## 5.   Textbook Libraries (from the command line)
 
 
+## FAQ
+###  What does the lift-java-installer.exe installer do?
 
-# Use the following library functions from algs4.jar
+In short, it installs and configures Java, IntelliJ, Git Bash, Xming, SpotBugs, PMD, Checkstyle, and our textbook libraries, along with accompanying command-line tools. Here is a more detailed list:
+- Installs Temurin OpenJDK 11.0.20 and adds it to the PATH.
+- Installs IntelliJ 2024.2 with customized user preferences.
+- Installs Git Bash 2.36.1 and adds it to the PATH.
+- Installs Xming 6.9.0.31.
+- Installs the following command-line tools for Java:
+  - The textbook libraries stdlib.jar and algs4.jar.
+  - Java wrapper scripts, including javac-algs4 and java-algs4.
+    - add scripts path to PATH (to compile and run from command line)
+    - add jar path to CLASSPATH( to compile and run from IntelliJ)
+  - SpotBugs 4.8.4; our SpotBugs configuration file spotbugs.xml; and wrapper script spotbugs.
+  - PMD 6.34.0; our PMD configuration file pmd.xml; and wrapper script pmd.
+  - Checkstyle 10.12.1; various configuration files (checkstyle-cos126.xml, checkstyle-cos226.xml, checkstyle-coursera.xml, and checkstyle-suppressions.xml); custom checks checkstyle-lift.jar; and wrapper script checkstyle.
+
+### How does this custom version of IntelliJ different from the standard one?
+IntelliJ is an industrial-strength integrated development environment (IDE), suitable for use by professional programmers. The installer configures your user preferences to make it more suitable for use by novice programmers:
+- Disables all built-in plugins except Terminal and JUnit. Installs the SpotBugs, Checkstyle-IDEA, Run-with-Arguments, Save-Actions, and Archive browser plugins.
+- Eliminates or reduces various popup elements (lightbulbs, code folding, breadcrumbs, gutter markers, notifications, parameter hints).
+- Simplifies menus and toolbars, hiding advanced options.
+- Disables live templates and postfix completion.
+- Adopts the Obsidian Black color scheme.
+- Auto-configures Java upon installation.
+- Adds a few keyboard shortcuts.
+  
+The course-specific project folders perform additional customizations:
+
+- Streamlines autocomplete to display only relevant libraries (such as java.lang, java.util, and algs4.jar).
+- Configures SpotBugs and Checkstyle with course-specific rules.
+- Provides course-specific libraries (such as algs4.jar).
+- Enables auto-formatting of code on save.
+- Enables auto-importing of Java libraries.
+
+
+# Use  algs4.jar
+# # Use the following library functions from algs4.jar
 - StdIn.readString(): reads and returns the next string from standard input.
 - StdIn.isEmpty(): returns true if there are no more strings available on standard input, and false - otherwise.
 - StdOut.println(): prints a string and terminating newline to standard output. It’s also fine to use System.out.println() instead.
 - StdRandom.bernoulli(p): returns true with probability p and false with probability 1−p
 
-
   In order to access these library functions, you must do the following two things:
 
-1. Add algs4.jar to the Java classpath. 
+## 1. Add algs4.jar to the Java classpath. 
    
    This typically requires a different mechanism from the command line and the IDE.
 - If you used our autoinstaller, the Bash commands javac-algs4 and java-algs4 add algs4.jar to the Java classpath.
-
 - If you use IntelliJ, the supplied IntelliJ project folder includes algs4.jar and adds it to the Java classpath.
     a. File → Project Structure (Ctrl + Alt + Shift + S) -> Libraries section: 
         If not: click + → Java → select the algs4.jar file.
-
-
 - If you prefer to use some other shell (such as Powershell or zsh) or IDE (such as Eclipse or Netbeans), that’s fine—just be sure that you can configure it accordingly.
 
-1. Add an import statement like the following at the top of your program:
+## 2. Add an import statement like the following at the top of your program:
 ```java
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -33,6 +79,12 @@ import edu.princeton.cs.algs4.StdRandom;
 ```
 If you use IntelliJ and the provided project folder, IntelliJ will automatically add and remove import statements as needed, so you won’t need to type them.
 
+
+## 3. add scripts to PATH
+
+
+
+## compile and run on command line examples
 
 ```bash
 ~/Desktop/hello> javac-algs4 RandomWord.java
