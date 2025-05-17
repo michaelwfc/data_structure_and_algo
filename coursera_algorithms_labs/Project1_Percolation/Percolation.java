@@ -18,7 +18,7 @@ public class Percolation {
     }
 
     private void validateIndex(int row, int col) {
-        if (row < 1 || row > n || col < 1 || col > n) throw new IndexOutOfBoundsException();
+        if (row < 1 || row > n || col < 1 || col > n) throw new IllegalArgumentException("Row or column is illegal: row=" + row + ", col=" + col);
     }
 
     /*
@@ -55,16 +55,16 @@ public class Percolation {
             number++;
         }
 
-        if (isOpen(row - 1, col)) {
+        if ((row-1>0) && isOpen(row - 1, col)) {
             uf.union(xyTo1D(row - 1, col), index);
         }
-        if (isOpen(row + 1, col)) {
+        if ((row+1<n+1) && isOpen(row + 1, col)) {
             uf.union(xyTo1D(row + 1, col), index);
         }
-        if (isOpen(row, col - 1)) {
+        if ((col-1>0) && isOpen(row, col - 1)) {
             uf.union(xyTo1D(row, col - 1), index);
         }
-        if (isOpen(row, col + 1)) {
+        if ((col+1<n+1) && isOpen(row, col + 1)) {
             uf.union(xyTo1D(row, col + 1), index);
         }
     }
@@ -74,7 +74,7 @@ public class Percolation {
      */
     public boolean isOpen(int row, int col) {
         // when the row,col is not validated, return false
-        if (row < 1 || row > n || col < 1 || col > n) return false;
+        validateIndex(row, col);
         int index = xyTo1D(row, col);
         return grid[index];
     }
@@ -101,6 +101,9 @@ public class Percolation {
      *  a system percolates if we fill all open sites connected to the top row and that process fills some open site on the bottom row.
      */
     public boolean percolates() {
+        if (number==0){
+            return false;
+        }
         return uf.connected(0, n * n + 1);
     }
 
