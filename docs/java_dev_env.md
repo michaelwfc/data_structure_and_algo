@@ -172,14 +172,58 @@ This course is built around the notion of efficient algorithms. Thus, we expect 
 
 ### SpotBugs
 
+SpotBugs 是一个 Java 静态分析工具，用于检测代码中潜在的 bug 模式（如空指针异常、资源泄漏、不正确的并发访问等）。
+它基于字节码进行分析，不需要运行程序即可发现潜在问题。
+
 we run [SpotBugs](https://spotbugs.github.io/) to check for common bug patterns in Java programs. A warning message strongly suggests a bug in your code but occasionally there are false positives. Here is a summary of [bug descriptions](https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html) , which you can use to help decode warning messages.
+
+The autograder uses SpotBugs 4.0.3 with the configuration file [spotbugs.xml](https://lift.cs.princeton.edu/java/spotbugs.xml)
+
+#### 方法三：使用 IntelliJ IDEA 内置支持
+
+IntelliJ IDEA 社区版和 Ultimate 版都内置了对 SpotBugs 的支持：
+安装插件：Settings > Plugins > Search "SpotBugs"。
+Restart IntelliJ IDEA
+右键点击你要分析的类或包 → Run SpotBugs on ...。
+查看结果面板中的警告信息
+
+##### 配置 IntelliJ 使用自定义的 spotbugs.xml
+
+Use Maven or Gradle + SpotBugs plugin (recommended for custom rules)
+
+1.  File > Settings > Tools > SpotBugs
+2.  设置如下选项：
+
+-   SpotBugs home directory：选择你本地的 SpotBugs 安装路径（如果你本地没有安装，插件会自动下载）。
+-   Effort: 选择 Max 获取最全面的结果。
+-   Threshold: 选择你希望看到的最低严重级别（推荐 Low）。
+-   Include filter files: 添加你的 spotbugs.xml 文件路径。
+    -   点击 + 号 → 浏览到你的 spotbugs.xml。
+-   其他可选设置：
+    -   是否检查测试代码
+    -   输出报告格式（HTML/XML 等）
+
+3. 确认保存设置。
 
 ### PMD
 
-PMD scans Java source code and looks for common bug patterns. The autograder uses PMD 6.3.0 with the configuration file
-pmd.xml . Here is a list of bug descriptions . Occasionally, PMD reports false positives, so the autograder does not count the results toward your score.
+PMD scans Java source code and looks for common bug patterns. The autograder uses PMD 6.3.0 with the configuration file [pmd.xml](https://lift.cs.princeton.edu/java/pmd.xml) .
+Here is a list of [bug descriptions](https://pmd.sourceforge.io/pmd-6.3.0/pmd_rules_java.html) .
+Occasionally, PMD reports false positives, so the autograder does not count the results toward your score.
 
 ## Style:
 
 we run [Checkstyle](https://checkstyle.sourceforge.io/) to automatically checks the style of your Java programs. Here is a list of available
 [Checkstyle checks](https://checkstyle.sourceforge.io/checks.html) , which you can use to help decode any warning messages.
+
+The autograder uses Checkstyle 8.31 with the configuration file [checkstyle-coursera.xml](https://lift.cs.princeton.edu/java/checkstyle-coursera.xml)
+
+### 3. Using Checkstyle in an IDE (e.g., IntelliJ IDEA or Eclipse)
+
+For IntelliJ IDEA:
+Go to Settings > Tools > Checkstyle.
+Click + and select your checkstyle.xml file.
+Apply settings and enable the Checkstyle inspection.
+
+4. Validate Code Against Custom Rules
+   Once configured, Checkstyle will validate your code against the rules defined in your checkstyle.xml. Any violations will be reported during the build or within the IDE.
