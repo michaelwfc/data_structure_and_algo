@@ -3,13 +3,10 @@
 import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import edu.princeton.cs.algs4.Stack;
-import edu.princeton.cs.algs4.Queue;
-import edu.princeton.cs.algs4.Bag;
 
-public class ReverseList <Item> implements Iterable<Item> {
-    private List<Item>  list = new ArrayList<>();
+public class ReverseList<Item> implements Iterable<Item> {
+    private List<Item> list = new ArrayList<>();
+
     public void add(Item item) {
         list.add(item);
     }
@@ -22,11 +19,12 @@ public class ReverseList <Item> implements Iterable<Item> {
 
     //  a class that implements the Iterator interface: implements the hasNext(), next(),
     class ReverseArrayIterator implements Iterator<Item> {
-        private int i =list.size();
+        private int i = list.size();
 
         public boolean hasNext() {
             return i > 0;
         }
+
         public Item next() {
             i--;
             return list.get(i);

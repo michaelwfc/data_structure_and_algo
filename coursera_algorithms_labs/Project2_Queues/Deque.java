@@ -19,10 +19,9 @@
     * A deque containing n items must use at most 48n + 192 bytes of memory.
 *   * Additionally, your iterator implementation must support each operation (including construction) in constant worst-case time.
  */
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdIn;
 
 
 public class Deque<Item> implements Iterable<Item> {
@@ -37,7 +36,7 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     // construct an empty deque
-    public Deque(){
+    public Deque() {
         first = null;
         last = null;
     }
@@ -63,6 +62,8 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty()) {
             // set the last node as first
             last = first;
+        }else{
+            oldfirst.prev=first;
         }
         n++;
     }
@@ -106,7 +107,7 @@ public class Deque<Item> implements Iterable<Item> {
 
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
-        return new DequeIterator(this.first);
+        return new DequeIterator<Item>(this.first);
     }
 
     private static class DequeIterator<Item> implements Iterator<Item> {
@@ -137,16 +138,18 @@ public class Deque<Item> implements Iterable<Item> {
      * Unit testing.
      * Your main() method must call directly every public constructor and method to help verify that they work as prescribed
      * (e.g., by printing results to standard output).
-    */
+     */
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         Deque<Integer> deque = new Deque<Integer>();
-        deque.addLast(0);
-        deque.addLast(1);
-        deque.addLast(2);
-        deque.addLast(3);
+        deque.addFirst(1);
+        deque.addFirst(2);
+        deque.addFirst(3);
         deque.addFirst(4);
-        for(Integer e : deque){
+        deque.addFirst(5);
+        deque.removeLast();
+
+        for (Integer e : deque) {
             System.out.println(e);
         }
         System.out.println(deque.removeFirst());
