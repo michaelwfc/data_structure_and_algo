@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /*************************************************************************
  *  Compilation:  javac LineSegment.java
  *  Execution:    none
@@ -62,6 +64,22 @@ public class LineSegment {
      */
     public int hashCode() {
         throw new UnsupportedOperationException("hashCode() is not supported");
+    }
+
+    public static void main(String[] args) {
+        Point p0 = new Point(0, 0);
+        Point p1 = new Point(2, 3);
+        Point p2 = new Point(1, 2);
+
+
+        p0.draw();
+        p1.draw();
+        p2.draw();
+        LineSegment segment1 = new LineSegment(p0, p1);
+        LineSegment segment2 = new LineSegment(p0, p2);
+        segment1.draw();
+        segment2.draw();
+
     }
 }
 

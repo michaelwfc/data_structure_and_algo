@@ -9,8 +9,9 @@
  ******************************************************************************/
 
 import java.util.Comparator;
-
 import edu.princeton.cs.algs4.StdDraw;
+import java.util.Arrays;
+
 
 public class Point implements Comparable<Point> {
 
@@ -60,6 +61,7 @@ public class Point implements Comparable<Point> {
      * @return the slope between this point and the specified point
      */
     public double slopeTo(Point that) {
+        /* YOUR CODE HERE */
         // Degenerate line segment (points are equal)
         if (this.x == that.x && this.y == that.y) {
             return Double.NEGATIVE_INFINITY;
@@ -87,7 +89,15 @@ public class Point implements Comparable<Point> {
      */
     public int compareTo(Point that) {
         /* YOUR CODE HERE */
+        if(this.x==that.x && this.y== that.y){
+            return 0;
+        }else if(this.y< that.y || (this.y==that.y && this.x < that.x)){
+            return -1;
+        }else{
+            return 1;
+        }
     }
+
 
     /**
      * Compares two points by the slope they make with this point.
@@ -97,6 +107,14 @@ public class Point implements Comparable<Point> {
      */
     public Comparator<Point> slopeOrder() {
         /* YOUR CODE HERE */
+        return new Comparator<Point>() {
+            @Override
+            public int compare(Point p1, Point p2) {
+                double slope1= slopeTo(p1);
+                double slope2= slopeTo(p2);
+                return Double.compare(slope1,slope2);
+            }
+        };
     }
 
 
@@ -116,6 +134,25 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        /* YOUR CODE HERE */
+        Point origin = new Point(0, 0);
+        Point[] points = {
+                new Point(2, 3),
+                new Point(1, 2),
+                new Point(3, 1),
+                new Point(2, 2),
+                new Point(5, 5)
+        };
+
+        System.out.println("Before sorting by slope with respect to " + origin + ":");
+        for (Point p : points) {
+            System.out.println(p + " slope = " + origin.slopeTo(p));
+        }
+
+        Arrays.sort(points, origin.slopeOrder());
+
+        System.out.println("\nAfter sorting by slope:");
+        for (Point p : points) {
+            System.out.println(p + " slope = " + origin.slopeTo(p));
+        }
     }
 }
