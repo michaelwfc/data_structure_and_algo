@@ -12,15 +12,22 @@
 ------------      -------    --------    -----------
 2021/1/12 21:55   wangfc      1.0         None
 
+https://www.coursera.org/learn/algorithms-part1/lecture/UQxFT/selection
+
+Proposition. Quick-select takes linear time on average.
+
+
 """
 from typing import List
-from sort_and_selection.sort import randomPartition
+from .sort_algorithms import randomPartition
 
 def findKthLargest(nums_input:List[int],K:int) ->int:
     """
-
+    https://leetcode-cn.com/problems/kth-largest-element-in-an-array
      215. 数组中的第K个最大元素
-    在未排序的数组中找到第 k 个最大的元素。请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+    给定整数数组 nums 和整数 k，请返回数组中第 k 个最大的元素。
+    请注意，你需要找的是数组排序后的第 k 个最大的元素，而不是第 k 个不同的元素。
+    你必须设计并实现时间复杂度为 O(n) 的算法解决此问题。
     示例 1:
     输入: [3,2,1,5,6,4] 和 k = 2
     输出: 5
@@ -32,12 +39,10 @@ def findKthLargest(nums_input:List[int],K:int) ->int:
 
     你可以假设 k 总是有效的，且 1 ≤ k ≤ 数组的长度。
 
-    来源：力扣（LeetCode）
-    链接：https://leetcode-cn.com/problems/kth-largest-element-in-an-array
-    著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+    
 
 
-    思路1： 对数组进行排序，然后选择第k个数
 
     :param nums:
     :return:
