@@ -1,4 +1,4 @@
-package chap2;
+package chap2sorting;
 
 //public class UnorderedMaxPQ<Key extends Comparable<Key>> {
 //    private Key[] pq; // pq[i] = ith element on pq

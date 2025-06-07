@@ -1,4 +1,4 @@
-package chap2;
+package chap2sorting;
 import edu.princeton.cs.algs4.StdOut;
 
 public class MaxPQ<Key extends Comparable<Key>> {

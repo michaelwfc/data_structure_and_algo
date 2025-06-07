@@ -1,6 +1,4 @@
-package chap2;
-
-import chap2.MaxPQ;
+package chap2sorting;
 
 //public class HeapSort {
 //    public static void sort(Comparable[] a) {

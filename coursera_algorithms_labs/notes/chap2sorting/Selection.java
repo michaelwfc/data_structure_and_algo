@@ -10,7 +10,7 @@ To maintain algorithm invariants:
 - Identify index of minimum entry on right
 - Exchange into position.
 */
-package chap2;
+package chap2sorting;
 
 //public class Selection {
 //    public static void sort(Comparable[] a) { // Sort a[] into increasing order.

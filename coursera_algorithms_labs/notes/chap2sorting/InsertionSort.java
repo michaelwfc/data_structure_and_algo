@@ -6,7 +6,7 @@ Invariants.
 - Entries to the right of ↑ have not yet been seen.
 
  */
-package chap2;
+package chap2sorting;
 
 //public class InsertionSort {
 //    public static void sort(Comparable[] a) {
