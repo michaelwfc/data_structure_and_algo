@@ -11,6 +11,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Project3_Sorting" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project4_8Puzzle" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project5_KDTrees" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Project6_WordNet" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
