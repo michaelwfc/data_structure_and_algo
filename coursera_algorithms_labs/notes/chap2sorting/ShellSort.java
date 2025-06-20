@@ -1,5 +1,5 @@
-package chap2sorting;
-
+//package chap2sorting;
+//
 //public class ShellSort {
 //    public static void sort(Comparable[] a) {
 //        int N = a.length;

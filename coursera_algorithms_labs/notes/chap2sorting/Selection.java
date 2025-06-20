@@ -1,17 +1,17 @@
-/* ALGORITHM 2.1 Selection sort
-
-Algorithm. ↑ scans from left to right.
-Invariants.
--   Entries the left of ↑ (including ↑) fixed and in ascending order.
--   No entry to right of ↑ is smaller than any entry to the left of ↑.
-
-To maintain algorithm invariants:
-- Move the pointer to the right.
-- Identify index of minimum entry on right
-- Exchange into position.
-*/
-package chap2sorting;
-
+///* ALGORITHM 2.1 Selection sort
+//
+//Algorithm. ↑ scans from left to right.
+//Invariants.
+//-   Entries the left of ↑ (including ↑) fixed and in ascending order.
+//-   No entry to right of ↑ is smaller than any entry to the left of ↑.
+//
+//To maintain algorithm invariants:
+//- Move the pointer to the right.
+//- Identify index of minimum entry on right
+//- Exchange into position.
+//*/
+//package chap2sorting;
+//
 //public class Selection {
 //    public static void sort(Comparable[] a) { // Sort a[] into increasing order.
 //        int N = a.length; // array length

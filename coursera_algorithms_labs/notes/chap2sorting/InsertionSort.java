@@ -1,13 +1,13 @@
-/*ALGORITHM 2.2 Insertion sort
-
-Algorithm. ↑ scans from left to right.
-Invariants.
-- Entries to the left of ↑ (including ↑) are in ascending order.
-- Entries to the right of ↑ have not yet been seen.
-
- */
-package chap2sorting;
-
+///*ALGORITHM 2.2 Insertion sort
+//
+//Algorithm. ↑ scans from left to right.
+//Invariants.
+//- Entries to the left of ↑ (including ↑) are in ascending order.
+//- Entries to the right of ↑ have not yet been seen.
+//
+// */
+//package chap2sorting;
+//
 //public class InsertionSort {
 //    public static void sort(Comparable[] a) {
 //        int N = a.length;
