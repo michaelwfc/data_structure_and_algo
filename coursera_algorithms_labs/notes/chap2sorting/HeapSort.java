@@ -13,18 +13,23 @@ public class HeapSort {
         int N = a.length;
 
         // 创建一个新的数组，索引从 1 到 N
-        Comparable[] aux = new Comparable[N + 1];
-        System.arraycopy(a, 0, aux, 1, N); // 忽略 aux[0]
+//        Comparable[] aux = new Comparable[N + 1];
+//        System.arraycopy(a, 0, aux, 1, N); // 忽略 aux[0]
 
-        //Heap construction. Build max heap using bottom-up method.
+        //Heap construction.
+        // Build max heap using bottom-up method.
         // (we assume array entries are indexed 1 to N)
         for (int k = N / 2; k >= 1; k--)
-            sink(aux, k, N);
+            sink(a, k, N);
 
+        // Sortdown
+        // Remove the maximum, one at a time
+        // Leave in array, instead of nulling out.
         while (N > 1) {
-            exch(aux, 1, N);
-            sink(aux, 1, --N);
+            exch(a, 1, N);
+            sink(a, 1, --N);
         }
+//        System.arraycopy(aux, 1, a, 0, a.length);
     }
 
     private static void sink(Comparable[] a, int k, int N) {
@@ -40,13 +45,15 @@ public class HeapSort {
     }
 
     private static boolean less(Comparable[] a, int i, int j) {
-        return a[i].compareTo(a[j]) < 0;
+        // but convert from 1-based indexing to 0-base indexing
+        return a[i-1].compareTo(a[j-1]) < 0;
     }
 
     private static void exch(Comparable[] a, int i, int j) {
-        Comparable temp = a[i];
-        a[i] = a[j];
-        a[j] = temp;
+        // but convert from 1-based indexing to 0-base indexing
+        Comparable temp = a[i-1];
+        a[i-1] = a[j-1];
+        a[j-1] = temp;
     }
 
     public static void main(String[] args) {

@@ -12,7 +12,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Project4_8Puzzle" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project5_KDTrees" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project6_WordNet" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Project6_WordNet/test" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/notes" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
