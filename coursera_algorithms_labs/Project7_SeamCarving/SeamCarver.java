@@ -1,4 +1,9 @@
-
+/* Seam-carving
+ * https://coursera.cs.princeton.edu/algs4/assignments/seam/specification.php
+*
+*
+*
+* */
 
 public class SeamCarver {
 
