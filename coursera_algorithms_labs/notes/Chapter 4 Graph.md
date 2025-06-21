@@ -104,3 +104,72 @@ we consider the edges in sorted order, it is a crossing
 edge of minimum weight. Thus, the algorithm is successively
 taking a minimal-weight crossing edge, in accordance
 with the greedy algorithm.
+
+# 4.4 SHORTEST PATHS
+
+Goal. Find the shortest path from s to every other vertex.
+Observation. A shortest-paths tree (SPT) solution exists. Why?
+Consequence. Can represent the SPT with two vertex-indexed arrays:
+- distTo[v] is length of shortest path from s to v.
+- edgeTo[v] is last edge on shortest path from s to v.
+
+
+### Edge relaxation.
+Relax edge e = v→w.
+- distTo[v] is length of shortest known path from s to v.
+- distTo[w] is length of shortest known path from s to w.
+- edgeTo[w] is last edge on shortest known path from s to w.
+- If e = v→w gives shorter path to w through v, update both distTo[w] and edgeTo[w].
+
+```JAVA
+private void relax(DirectedEdge e)
+{
+    int v = e.from(), w = e.to();
+    if (distTo[w] > distTo[v] + e.weight())
+    {
+        distTo[w] = distTo[v] + e.weight();
+        edgeTo[w] = e;
+    }
+}
+
+```
+
+## Theoretical basis for shortest-paths algorithms.
+
+### Shortest-paths optimality conditions
+
+The following proposition shows an equivalence between the global condition that the distances are shortest-paths distances, and the local condition
+that we test to relax an edge.
+
+Proposition. Let G be an edge-weighted digraph.
+Then distTo[] are the shortest path distances from s iff:
+- distTo[s] = 0.
+- For each vertex v, distTo[v] is the length of some path from s to v.
+- For each edge e = v→w, distTo[w] ≤ distTo[v] + e.weight().
+
+
+## Generic shortest-paths algorithm
+Initialize distTo[s] = 0 and distTo[v] = ∞ for all other vertices.
+Repeat until optimality conditions are satisfied:
+- Relax any edge.
+
+### Efficient implementations. How to choose which edge to relax?
+  Ex 1. Dijkstra's algorithm (nonnegative weights).
+  Ex 2. Topological sort algorithm (no directed cycles).
+  Ex 3. Bellman-Ford algorithm (no negative cycles).
+  
+
+## Dijkstra's algorithm
+
+- Consider vertices in increasing order of distance from s
+(non-tree vertex with the lowest distTo[] value).
+- Add vertex to tree and relax all edges pointing from that vertex.
+  
+Proposition. Dijkstra's algorithm computes a SPT in any edge-weighted digraph with nonnegative weights.
+
+
+## Edge-weighted DAGs
+
+
+
+## Negative weights

@@ -10,8 +10,8 @@ import edu.princeton.cs.algs4.StdOut;
 
 
 public class MaxPQ<Key extends Comparable<Key>> {
-    private Key[] pq;
-    private int N;
+    private Key[] pq;  // heap-ordered complete binary tree
+    private int N;    // in pq[1..N] with pq[0] unused
 
     public MaxPQ(int capacity) {
 
