@@ -17,7 +17,10 @@ public class SeamCarver {
 
     // create a seam carver object based on the given picture
     public SeamCarver(Picture picture) {
-        this.picture = picture;
+        if(picture ==null) throw new IllegalArgumentException("picture is null");
+        // make a defensive copy
+        // this ensures the internal state of your object cannot be altered by outside code after construction
+        this.picture = new Picture(picture);
 
     }
 
@@ -62,6 +65,7 @@ public class SeamCarver {
      */
 
     private double getEnergy(int x, int y, double[][] energyArray) {
+        validateIndex(x,y);
         double energyValue;
         if (energyArray[x][y] != -1) {
             energyValue = energyArray[x][y];
@@ -107,7 +111,7 @@ public class SeamCarver {
                     for (int dx = -1; dx <= 1; dx++) {
                         int nextX = i + dx;
                         int nextY = j + 1;
-                        if (validateIndex(nextX, nextY)) {
+                        if (nextX >= 0 && nextX< this.width() && nextY >= 0 && nextY < this.height()) {
                             double energyValue = getEnergy(nextX,nextY, energyArray);
                             double newDist = distTo[i][j] + energyValue;
                             if (newDist < distTo[nextX][nextY]) {
@@ -147,8 +151,8 @@ public class SeamCarver {
 
         }
 
-        private boolean validateIndex ( int x, int y){
-            return x >= 0 && x < this.width() && y >= 0 && y < this.height();
+        private void validateIndex ( int x, int y){
+            if(x < 0 || x >= this.width() || y < 0 || y >= this.height()) throw new IllegalArgumentException("invalid index");
         }
 
 
@@ -190,10 +194,14 @@ public class SeamCarver {
             int height = height();
             int width = width();
             if (seam == null || seam.length != height) throw new IllegalArgumentException("Invalid seam");
+
             // Validate seam is within image bounds and is continuous
             for (int y = 0; y < height(); y++) {
                 if (seam[y] < 0 || seam[y] >= width)
                     throw new IllegalArgumentException("Seam value out of bounds at row " + y);
+                if(y>0 && Math.abs(seam[y]- seam[y-1])>1)
+                    throw new IllegalArgumentException("Seam not continuous");
+
             }
 
             Picture newPicture = new Picture(width - 1, height);

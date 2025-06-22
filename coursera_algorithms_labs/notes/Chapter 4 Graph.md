@@ -115,6 +115,9 @@ Consequence. Can represent the SPT with two vertex-indexed arrays:
 
 
 ### Edge relaxation.
+to relax an edge v->w means to test whether the best known way from s to w is to go from s to v, then take the edge from v to w, and, if so, update our
+data structures to indicate that to be the case. 
+
 Relax edge e = v→w.
 - distTo[v] is length of shortest known path from s to v.
 - distTo[w] is length of shortest known path from s to w.
@@ -124,11 +127,14 @@ Relax edge e = v→w.
 ```JAVA
 private void relax(DirectedEdge e)
 {
-    int v = e.from(), w = e.to();
-    if (distTo[w] > distTo[v] + e.weight())
-    {
-        distTo[w] = distTo[v] + e.weight();
-        edgeTo[w] = e;
+  int v = e.from(), w = e.to();
+  // if that value is not smaller than  distTo[w],  we say the edge is ineligible,
+  // if the value is smaller than  distTo[w],   we say the edge is eligible,
+  if (distTo[w] > distTo[v] + e.weight())
+    {   
+        
+        distTo[w] = distTo[v] + e.weight(); // update the shortest distance to w
+        edgeTo[w] = e;  // update the edge
     }
 }
 
@@ -136,7 +142,7 @@ private void relax(DirectedEdge e)
 
 ## Theoretical basis for shortest-paths algorithms.
 
-### Shortest-paths optimality conditions
+### Shortest-paths Optimality conditions
 
 The following proposition shows an equivalence between the global condition that the distances are shortest-paths distances, and the local condition
 that we test to relax an edge.
