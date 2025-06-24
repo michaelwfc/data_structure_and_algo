@@ -179,3 +179,162 @@ Proposition. Dijkstra's algorithm computes a SPT in any edge-weighted digraph wi
 
 
 ## Negative weights
+
+
+# 6.4 MAXIMUM FLOW
+
+Definition. A flow network is an edge-weighted digraph with positive edge weights
+(which we refer to as capacities). An st-flow network has two identified vertices, a
+source s and a sink t.
+
+Definition. An an st-flow network is a set of nonnegative values associated
+with each edge, which we refer to as edge flows. We say that a flow is feasible if it
+satisfies the condition that no edge’s flow is greater than that edge’s capacity and the
+local equilibrium condition that the every vertex’s netflow is zero (except s and t).
+
+
+## Maxflow problem
+Input. An edge-weighted digraph, source vertex s, and target vertex t.
+(each edge has a positive capacity)
+
+### Def. st-flow (flow)
+An st-flow (flow) is an assignment of values to the edges such that:
+Capacity constraint: 0 ≤ edge's flow ≤ edge's capacity.
+Local equilibrium: inflow = outflow at every vertex (except s and t).
+
+### Def: the st-flow value
+The value of a flow is the inflow at t. 
+- we assume no edge points to s or from t
+- We refer to the sink’s inflow as the st-flow value.
+
+### Def: Maximum st-flow (maxflow) problem. 
+Given an st-flow network, find an st-flow such that no other flow from s to t has a larger value.
+
+
+## Ford-Fulkerson algorithm
+
+### Idea: increase flow along augmenting paths
+Initialization. Start with 0 flow.
+#### Def: Augmenting path.
+Find an undirected path from s to t such that:
+- Can increase flow on forward edges (not full).
+- Can decrease flow on backward edge (not empty).
+
+Termination. All paths from s to t are blocked by either a
+- Full forward edge.
+- Empty backward edge.
+
+
+
+
+
+
+
+
+## Mincut problem
+Input. An edge-weighted digraph, source vertex s, and target vertex t.
+(each edge has a positive capacity)
+
+### Def: st-cut (cut)
+A st-cut (cut) is a partition of the vertices into two disjoint sets, with s in one set A and t in the other set B.
+We sometimes refer to the set of crossing st-edges as a cut set.
+
+### Def: the capacity of the cut
+Its capacity is the sum of the capacities of the edges from A to B.
+
+
+### Minimum st-cut (mincut) problem. 
+Find a cut of minimum capacity.
+
+
+
+
+## maxflow-mincut theorem
+
+### Def: The net flow
+The net flow across a cut (A, B) is the sum of the flows on its edges from A to B minus the sum of the flows on its edges from from B to A.
+
+
+### Flow-value lemma (Relationship between flows and cuts)
+Let f be any flow and let (A, B) be any cut. Then, the net flow across (A, B) equals the value of f.
+
+Pf. By induction on the size of B.
+- Base case: B = { t }.
+- Induction step: remains true by local equilibrium when moving any vertex from A to B.
+
+### Corollary (local equilibrium in an st-flow implies global equilibrium)
+Outflow from s = inflow to t = value of flow.
+
+
+### Weak duality. 
+Let f be any flow and let (A, B) be any cut. Then, the value of the flow ≤ the capacity of the cut.
+
+### Maxflow-mincut theorem
+ The following three conditions are equivalent for any flow f :
+i. There exists a cut whose capacity equals the value of the flow f.
+ii. f is a maxflow.
+iii. There is no augmenting path with respect to f.
+
+[ i -> ii ]
+- Suppose that (A, B) is a cut with capacity equal to the value of f.
+- Then, the value of any flow f ' ≤ capacity of (A, B) = value of f.
+- Thus, f is a maxflow.
+
+[ ii -> iii ] We prove contrapositive: ~iii ->  ~ii.
+- Suppose that there is an augmenting path with respect to f.
+- Can improve flow f by sending flow along this path.
+- Thus, f is not a maxflow.
+
+
+[ iii -> i ]
+Suppose that there is no augmenting path with respect to f.
+- Let (A, B) be a cut where A is the set of vertices connected to s by an
+undirected path with no full forward or empty backward edges.
+- By definition, s is in A; since no augmenting path, t is in B.
+- Capacity of cut = net flow across cut (since forward edges are full and the backward edges are empty)
+   = value of flow f. (flow-value lemma)
+
+### Corollary. ( Integrality property) 
+When capacities are integers, there exists an integer-valued maxflow, and the Ford-Fulkerson algorithm finds it.
+Proof: Each augmenting path increases the flow by a positive integer (the minimum
+of the unused capacities in the forward edges and the flows in the backward
+edges, all of which are always positive integers).
+
+
+Augmenting path theorem. A flow f is a maxflow iff no augmenting paths.
+Maxflow-mincut theorem. Value of the maxflow = capacity of mincut.
+
+
+### To compute mincut (A, B) from maxflow f :
+- By augmenting path theorem, no augmenting paths with respect to f.
+- Compute A = set of vertices connected to s by an undirected path with no full forward or empty backward edges. 
+
+Given a maxflow f  in a flow network, what is the order of growth of the running time to compute a mincut? V+E
+The algorithm is to find all of the vertices reachable from s using only forward edges that aren't full or backwards edges that aren't empty. 
+This can be done in linear time using either breadth-first search for depth-first search.
+
+
+### Definition.  Residual network
+Given a st-flow network and an st-flow, the residual network for the
+flow has the same vertices as the original and one or two edges in the residual network
+for each edge in the original, defined as follows: 
+For each edge e from v to w in the original, let fe be its flow and ce its capacity. 
+If fe is positive, include an edge w->v in the residual with capacity fe ; 
+and if fe is less than ce, include an edge v->w in the residual with capacity ce - fe .
+
+
+
+## Ford-Fulkerson algorithm
+Start with 0 flow.
+While there exists an augmenting path:
+- find an augmenting path
+- compute bottleneck capacity
+- increase flow on that path by bottleneck capacity
+
+Questions.
+- How to compute a mincut? Easy. ✔
+- How to find an augmenting path? BFS works well.
+- If FF terminates, does it always compute a maxflow? Yes. ✔
+- Does FF always terminate? If so, after how many augmentations?
+yes, provided edge capacities are integers (or augmenting paths are chosen carefully) 
+requires clever analysis
