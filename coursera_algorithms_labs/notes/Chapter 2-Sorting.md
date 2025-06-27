@@ -1,4 +1,6 @@
 # 2.1 ELEMENTARY SORTS
+## Bubble sort
+
 
 ## Selection sort
 
@@ -17,8 +19,7 @@ Invariants.
 ## Insertion sort
 
 The algorithm that people often use to sort bridge hands is to consider the cards one at a time, inserting each into its
-proper place among those already
-considered (keeping them sorted).
+proper place among those already considered (keeping them sorted).
 
 Algorithm. ↑ scans from left to right.
 Invariants.
@@ -171,7 +172,7 @@ we can travel up and down by doing simple arithmetic on array indices:
 - to move up the tree from a[k] we set k to k/2;
 - to move down the tree we set k to 2*k or 2*k+1.
 
-[!image](../../../images/Heap%20representations.png)
+[!image](../../images/Heap%20representations.png)
 
 ---
 
