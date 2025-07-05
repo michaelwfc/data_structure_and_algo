@@ -34,6 +34,7 @@ public class MergeSort extends SelectionSort {
         if(hi<= lo+ CUTOFF-1){
             InsertionSort.sort(a, lo, hi);
         }
+
         if (hi <= lo) return;
         int mid = lo+ (hi - lo) / 2;
         sort(a, aux, lo, mid);

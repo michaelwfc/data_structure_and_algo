@@ -35,3 +35,4 @@ Mac OS X,  Windows, or Linux, but you are free to use any IDE. More details abou
 Final exam. (Sorry, Coursera did not migrate the final exam from the old platform.) The final exam is cumulative and designed to make sure you understand how each algorithm works and when it is effective. The final does not involve Java programming. Many of the questions will be based on questions from the exercises and in-lecture quizzes. You may attempt the final exam up to 3 times (your best score is recorded).
 
 Job interview questions. Each week, we will also provide a few algorithmic job interview questions based on the material for the week, inspired by questions asked at leading technology companies. The questions are for self-enrichment and are not assessed; however, we will provide some hints and you are welcome to discuss solutions in the discussion forums with your classmates.
+ 
