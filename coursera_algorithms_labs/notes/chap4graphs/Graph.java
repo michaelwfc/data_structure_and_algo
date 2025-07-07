@@ -17,6 +17,9 @@ public class Graph {
             adj[v] = new Bag<Integer>();
     }
 
+    public int V(){
+        return V;
+    }
     // add edge v-w
     // (parallel edges and self-loops allowed)
     public void addEdge(int v, int w) {

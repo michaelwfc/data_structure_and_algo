@@ -14,6 +14,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Project6_WordNet" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/notes" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project7_SeamCarving" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Project9_Boggle" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

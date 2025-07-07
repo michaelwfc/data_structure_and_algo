@@ -20,7 +20,10 @@
 * */
 
 package chap5string;
+
 import edu.princeton.cs.algs4.Queue;
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
 
 public class TrieST<Value> {
     private static final int R = 256;
@@ -48,42 +51,42 @@ public class TrieST<Value> {
         return x;
     }
 
-    public boolean contains(String key){
+    public boolean contains(String key) {
         Value val = get(key);
-        return val!=null;
+        return val != null;
 
     }
 
-    public Value get(String key){
-        Node x= get(root, key,0);
-        if(x==null) return null;
+    public Value get(String key) {
+        Node x = get(root, key, 0);
+        if (x == null) return null;
         return (Value) x.value;
     }
 
-    private Node get(Node x, String key, int d){
-        if(x==null) return null;
-        if(d==key.length()) return x;
-        char c =  key.charAt(d);
-        return get(x.next[c], key, d+1);
+    private Node get(Node x, String key, int d) {
+        if (x == null) return null;
+        if (d == key.length()) return x;
+        char c = key.charAt(d);
+        return get(x.next[c], key, d + 1);
     }
 
-    public void delete(String key){
+    public void delete(String key) {
         root = delete(root, key, 0);
     }
 
-    private Node delete(Node x, String key,int d){
-        if(x==null) return null;
-        if(d==key.length())
-            x.value= null;
-        else{
-            char c =  key.charAt(d);
-            x.next[c] =  delete(x.next[c], key, d+1);
+    private Node delete(Node x, String key, int d) {
+        if (x == null) return null;
+        if (d == key.length())
+            x.value = null;
+        else {
+            char c = key.charAt(d);
+            x.next[c] = delete(x.next[c], key, d + 1);
         }
         //after the recursive calls for a node x, we return null if the client value
         //and all of the links in a node are null; otherwise we return x.
-        if(x.value!=null) return x;
-        for(char c=0;c<R;c++)
-            if(x.next[c]!=null) return x;
+        if (x.value != null) return x;
+        for (char c = 0; c < R; c++)
+            if (x.next[c] != null) return x;
         return null;
     }
 
@@ -92,14 +95,13 @@ public class TrieST<Value> {
     }
 
     //keys having s as a prefix
-
     public Iterable<String> keysWithPrefix(String prefix) {
         Queue<String> q = new Queue<>();
         collect(get(root, prefix, 0), prefix, q);
         return q;
     }
 
-    private void collect(TrieST.Node x, String prefix, Queue<String> q) {
+    private void collect(Node x, String prefix, Queue<String> q) {
         if (x == null) return;
         if (x.value != null) q.enqueue(prefix);
         for (char c = 0; c < R; c++) {
@@ -135,21 +137,46 @@ public class TrieST<Value> {
 
     //longest key that is a prefix of s
     String longestPrefixOf(String query) {
-        int length = search(root, query, 0,0);
+        int length = search(root, query, 0, 0);
         return query.substring(0, length);
 
     }
 
-    private int search(Node x, String query, int d, int length){
-        if(x==null) return length;
-        if(x.value!=null) length=d;
-        if(d==query.length()) return length;
-        char c= query.charAt(d);
-        return search(x.next[c],query, d+1, length);
+    private int search(Node x, String query, int d, int length) {
+        if (x == null) return length;
+        if (x.value != null) length = d;
+        if (d == query.length()) return length;
+        char c = query.charAt(d);
+        return search(x.next[c], query, d + 1, length);
     }
 
 
-    public static void main(){
+    public static void main(String[] args) {
+        String cwd = System.getProperty("user.dir");
+        System.out.println("Current working directory: " + cwd);
+
+        String dictionaryFile = "dictionary-yawl.txt"; //../../Project9_Boggle
+        In in = new In(dictionaryFile);
+        String[] dictionary = in.readAllStrings();
+        TrieST trie = new TrieST();
+        int word_index = 1;
+        for (String word : dictionary) {
+            trie.put(word, word_index);
+            word_index++;
+        }
+        String word = "APPLE";
+        int value = (int) trie.get(word);
+        StdOut.println("word:" + word + " has value: " + value);
+
+        String prefix = "AAT";
+        boolean hasPrefix = trie.contains(prefix);
+        StdOut.println("prefix:" + prefix + " is in dictionary: " + hasPrefix);
+
+        Iterable<String> keys = trie.keysWithPrefix(prefix);
+        for (String key : keys) {
+            StdOut.println("prefix with:" + prefix + " has key: " + key);
+        }
 
     }
-}
+    }
+
