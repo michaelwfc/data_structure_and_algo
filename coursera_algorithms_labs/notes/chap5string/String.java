@@ -1,17 +1,17 @@
 //package chap5string;
-//
-///*
-//* String data type (in Java).
-//* Sequence of characters (immutable).
-//* Underlying implementation. Immutable char[] array, offset, and length.
-//*
-//* StringBuilder data type.
-//* Sequence of characters (mutable).
-//* Underlying implementation. Resizing char[] array and length.
-//*
-//* Remark. StringBuffer data type is similar, but thread safe (and slower).
-//* */
-//public final class String implements Comparable<String> {
+
+/*
+* String data type (in Java).
+* Sequence of characters (immutable).
+* Underlying implementation. Immutable char[] array, offset, and length.
+*
+* StringBuilder data type.
+* Sequence of characters (mutable).
+* Underlying implementation. Resizing char[] array and length.
+*
+* Remark. StringBuffer data type is similar, but thread safe (and slower).
+* */
+//public final class String implements Comparable<java.lang.String> {
 //    private char[] value; // characters， Immutable char[] array
 //    private int offset; // index of first char in array
 //    private int length; // length of string
@@ -25,7 +25,7 @@
 //        return value[i + offset];
 //    }
 //
-//    private String(int offset, int length, char[] value) {
+//    public String(int offset, int length, char[] value) {
 //        this.offset = offset;
 //        this.length = length;
 //        this.value = value;

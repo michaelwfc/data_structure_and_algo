@@ -1,5 +1,9 @@
 /*
- *
+ * Count frequency freq[i] for each char i in input.
+ * Start with one node corresponding to each char i (with weight freq[i]).
+ * Repeat until single trie formed:
+    – select two tries with min weight freq[i] and freq[j]
+    – merge into single trie with weight freq[i] + freq[j]
  *
  * */
 package chap5string;
@@ -85,8 +89,8 @@ public class Huffman {
     }
 
     /*
-    * we use a character-indexed array st[] instead of a general symbol table for efficiency,
-    * */
+     * we use a character-indexed array st[] instead of a general symbol table for efficiency,
+     * */
     private static String[] buildCode(Node root) {
         String[] st = new String[R];
         buildCode(st, root, "");
@@ -95,9 +99,9 @@ public class Huffman {
 
 
     /*Building an encoding table from a (prefix-free) code trie
-    * For any trie, it produces a table giving the bitstring associated with each character in the trie
-    * (represented as a String of 0s and 1s).
-    * */
+     * For any trie, it produces a table giving the bitstring associated with each character in the trie
+     * (represented as a String of 0s and 1s).
+     * */
     private static void buildCode(String[] st, Node x, String s) {
         // make a lookup table from trie
         if (x.isLeaf()) {
@@ -133,43 +137,42 @@ public class Huffman {
     }
 
     /*
-    * Read the input.
-    * Tabulate the frequency of occurrence of each char value in the input.
-    * Build the Huffman encoding trie corresponding to those frequencies.
-    * Build the corresponding codeword table, to associate a bitstring with each char value in the input.
-    * Write the trie, encoded as a bitstring.
-    * Write the count of characters in the input, encoded as a bitstring.
-    * Use the codeword table to write the codeword for each input character.
-    * 
-    * */
-    private static void compress(){
+     * Read the input.
+     * Tabulate the frequency of occurrence of each char value in the input.
+     * Build the Huffman encoding trie corresponding to those frequencies.
+     * Build the corresponding codeword table, to associate a bitstring with each char value in the input.
+     * Write the trie, encoded as a bitstring.
+     * Write the count of characters in the input, encoded as a bitstring.
+     * Use the codeword table to write the codeword for each input character.
+     *
+     * */
+    private static void compress() {
         String s = BinaryStdIn.readString();
-        char[] input= s.toCharArray();
+        char[] input = s.toCharArray();
         int[] freq = new int[R];
-        for(int i=0;i< input.length; i++)
+        for (int i = 0; i < input.length; i++)
             freq[input[i]]++;
 
         // Build Huffman code trie.
-        Node  root= buildTrie(freq);
+        Node root = buildTrie(freq);
 
         // Build code table (recursive).
-        String[] st=  new String[R];
-        buildCode(st, root,"");
+        String[] st = new String[R];
+        buildCode(st, root, "");
         // Print trie for decoder (recursive).
         writeTrie(root);
         BinaryStdOut.write(input.length);
         // Use Huffman code to encode input
-        for(int i=0 ; i< input.length; i++){
-            String code =  st[input[i]];
-            for(int j=0;j<code.length();j++)
-            {
-                if(code.charAt(j)=='1')
+        for (int i = 0; i < input.length; i++) {
+            String code = st[input[i]];
+            for (int j = 0; j < code.length(); j++) {
+                if (code.charAt(j) == '1')
                     BinaryStdOut.write(true);
                 else BinaryStdOut.write(false);
             }
         }
         BinaryStdOut.close();
-        
+
     }
 
     public static void main(String[] args) {

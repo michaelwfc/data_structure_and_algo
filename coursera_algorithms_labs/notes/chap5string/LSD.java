@@ -1,4 +1,7 @@
-/*
+/* LSD string (radix) sort.
+􀉾Consider characters from right to left.
+􀉾Stably sort using dth character as the key (using key-indexed counting).
+ *
  * */
 
 
@@ -21,13 +24,13 @@ public class LSD extends InsertionSort {
         for (int d = W - 1; d >= 0; d--) {
             int[] count = new int[R + 1];
             for (int i = 0; i < N; i++)
-                count[a[i].charAt(d) + 1]++;
+                count[a[i].charAt(d) + 1]++;  //Count frequencies of each letter using key as index
             for (int r = 0; r < R; r++)
-                count[r + 1] += count[r];
+                count[r + 1] += count[r]; //Compute frequency cumulates which specify destinations
             for (int i = 0; i < N; i++)
-                aux[count[a[i].charAt(d)]++] = a[i];
+                aux[count[a[i].charAt(d)]++] = a[i]; //Access cumulates using key as index to move items.
             for (int i = 0; i < N; i++)
-                a[i] = aux[i];
+                a[i] = aux[i]; //Copy back into original array.
         }
 
     }
@@ -50,7 +53,7 @@ public class LSD extends InsertionSort {
         String[] a = In.readStrings(filePath);
         int W =  a[0].length();
         sort(a,W);
-//        assert isSorted(a);
+        assert isSorted(a);
         show(a);
     }
 
