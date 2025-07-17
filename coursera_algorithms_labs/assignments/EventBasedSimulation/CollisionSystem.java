@@ -1,30 +1,22 @@
 /*
-* https://introcs.cs.princeton.edu/java/assignments/collisions.html
-* Event-driven simulation
-* With event-driven simulation we focus on those times at which interesting events occur.
-* In the hard disc model, all particles travel in straight line trajectories at constant speeds between collisions.
-* Thus, our main challenge is to determine the ordered sequence of particle collisions.
-* We address this challenge by maintaining a priority queue of future events, ordered by time.
-* At any given time, the priority queue contains all future collisions that would occur, assuming each particle moves in a straight line trajectory forever.
-* As particles collide and change direction, some of the events scheduled on the priority queue become "stale" or "invalidated", and no longer correspond to physical collisions.
-* We can adopt a lazy strategy, leaving such invalidated collision on the priority queue, waiting to identify and discard them as they are deleted.
-*
-* The main event-driven simulation loop works as follows:
-- Delete the impending event, i.e., the one with the minimum priority t.
-- If the event corresponds to an invalidated collision, discard it. The event is invalid if one of the particles has participated in a collision since the event was inserted onto the priority queue.
-- If the event corresponds to a physical collision between particles i and j:
-   - Advance all particles to time t along a straight line trajectory.
-   - Update the velocities of the two colliding particles i and j according to the laws of elastic collision.
-   - Determine all future collisions that would occur involving either i or j, assuming all particles move in straight line trajectories from time t onwards. Insert these events onto the priority queue.
-- If the event corresponds to a physical collision between particles i and a wall, do the analogous thing for particle i.
+ * https://introcs.cs.princeton.edu/java/assignments/collisions.html
+ * Event-driven simulation
+ * With event-driven simulation we focus on those times at which interesting events occur.
+ * In the hard disc model, all particles travel in straight line trajectories at constant speeds between collisions.
+ * Thus, our main challenge is to determine the ordered sequence of particle collisions.
+ * We address this challenge by maintaining a priority queue of future events, ordered by time.
+ * At any given time, the priority queue contains all future collisions that would occur, assuming each particle moves in a straight line trajectory forever.
+ * As particles collide and change direction, some of the events scheduled on the priority queue become "stale" or "invalidated", and no longer correspond to physical collisions.
+ * We can adopt a lazy strategy, leaving such invalidated collision on the priority queue, waiting to identify and discard them as they are deleted.
+ *
 
-* This event-driven approach results in a more robust, accurate, and efficient simulation than the time-driven one.
-*
-*
-* */
+ *
+ *
+ * */
 
 
 import edu.princeton.cs.algs4.MinPQ;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class CollisionSystem {
     private MinPQ<Event> pq; // the priority queue
@@ -35,18 +27,18 @@ public class CollisionSystem {
         this.particles = particles;
     }
 
+    /*
+    * four different types of events, as follows:
+    ■ Neither a nor b null: particle-particle collision
+    ■ a not null and b null: collision between a and a vertical wall
+    ■ a null and b not null: collision between b and a horizontal wall
+    ■ Both a and b null: redraw event (draw all particles)*
+    * */
     private class Event implements Comparable<Event> {
         private final double time;  //time when the event is predicted to happen,
         private final Particle a, b;
         private final int countA, countB;
 
-        /*
-        * four different types of events, as follows:
-        ■ Neither a nor b null: particle-particle collision
-        ■ a not null and b null: collision between a and a vertical wall
-        ■ a null and b not null: collision between b and a horizontal wall
-        ■ Both a and b null: redraw event (draw all particles)*
-        * */
         public Event(double t, Particle a, Particle b) {
             // Create a new event to occur at time t involving a and b.
             this.time = t;
@@ -64,13 +56,16 @@ public class CollisionSystem {
             else return 0;
         }
 
+        /* check If the event has been invalidated When we remove an event from the priority queue for processing
+         * Many of the collisions that we predict do not actually happen because some other collision intervenes
+         * we check whether the counts corresponding to its particle(s) have changed since the event was created.
+         * */
         public boolean isValid() {
             if (a != null && a.count() != countA) return false;
             if (b != null && b.count() != countB) return false;
             return true;
         }
     }
-
 
     /*
      * calculates all potential future collisions involving particle a (either with another particle or with
@@ -101,12 +96,23 @@ public class CollisionSystem {
         for (int i = 0; i < particles.length; i++) particles[i].draw();
         StdDraw.show(20);
         if (t < limit)
+            // Add redraw event to PQ again
             pq.insert(new Event(t + 1.0 / Hz, null, null));
     }
 
     /*
      * simulate
      * limit:
+     * * The main event-driven simulation loop works as follows:
+    - Delete the impending event, i.e., the one with the minimum priority t.
+    - If the event corresponds to an invalidated collision, discard it. The event is invalid if one of the particles has participated in a collision since the event was inserted onto the priority queue.
+    - If the event corresponds to a physical collision between particles i and j:
+       - Advance all particles to time t along a straight line trajectory.
+       - Update the velocities of the two colliding particles i and j according to the laws of elastic collision.
+       - Determine all future collisions that would occur involving either i or j, assuming all particles move in straight line trajectories from time t onwards. Insert these events onto the priority queue.
+    - If the event corresponds to a physical collision between particles i and a wall, do the analogous thing for particle i.
+
+    * This event-driven approach results in a more robust, accurate, and efficient simulation than the time-driven one.
      * */
     public void simulate(double limit, double Hz) {
         // the priority queue is initialized with events representing all predicted future collisions involving each particle.
@@ -120,7 +126,11 @@ public class CollisionSystem {
         while (!pq.isEmpty()) {
             // Delete the impending event from PQ (min priority = t).
             Event event = pq.delMin();
-            if (!event.isValid()) continue; // If the event has been invalidated, ignore it.
+            // If the event has been invalidated, ignore it.
+            // lazy approach: when a particle is involved in a collision, /we leave the now-invalid events associated
+            //with it on the priority queue and essentially ignore them when they come off.
+            if (!event.isValid()) continue;
+
             for (int i = 0; i < particles.length; i++)
                 particles[i].move(event.time - t); // Update particle positions
             t = event.time; // updates time
@@ -142,11 +152,11 @@ public class CollisionSystem {
     public static void main(String[] args) {
         StdDraw.show(0);
 //        int N = Integer.parseInt(args[0]);
-        int N=20;
+        int N = 20;
         Particle[] particles = new Particle[N];
         for (int i = 0; i < N; i++)
             particles[i] = new Particle();
         CollisionSystem system = new CollisionSystem(particles);
-        system.simulate(10000, 0.5);
+        system.simulate(10000, 1);
     }
 }

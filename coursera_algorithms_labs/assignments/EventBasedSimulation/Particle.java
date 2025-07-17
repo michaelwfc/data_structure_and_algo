@@ -2,6 +2,7 @@
 //import edu.princeton.cs.algs4
 
 import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdDraw;
 
 public class Particle {
     private double rx, ry; // position
@@ -52,7 +53,7 @@ public class Particle {
         double dx = that.rx - this.rx, dy = that.ry - this.ry;
         double dvx = that.vx - this.vx, dvy = that.vy - this.vy;
         double dvdr = dx * dvx + dy * dvy;
-        if (dvdr > 0) return Double.POSITIVE_INFINITY;
+        if (dvdr >= 0) return Double.POSITIVE_INFINITY;
         double dvdv = dvx * dvx + dvy * dvy;
         double drdr = dx * dx + dy * dy;
         double sigma = this.radius + that.radius;
@@ -93,11 +94,13 @@ public class Particle {
 
     public void bounceOffVerticalWall() {
         vx = -vx;
+        this.count++;
     }
 
     //change velocity to reflect hitting horizontal wall
     public void bounceOffHorizontalWall() {
         vy = -vy;
+        this.count++;
     }
 
 
