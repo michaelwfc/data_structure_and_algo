@@ -226,3 +226,49 @@ Basic plan for in-place sort.
 - Create max-heap with all N keys.
   Heap construction. Build max heap using bottom-up method.
 - Repeatedly remove the maximum key.
+
+
+# Convex hull
+
+## Definition
+
+The convex hull of a set of N points is the smallest perimeter fence enclosing the points.
+
+Equivalent definitions.
+- Smallest convex set containing all the points.
+- Smallest area convex polygon enclosing the points.
+- Convex polygon enclosing the points, whose vertices are points in set.
+
+
+## geometric properties
+
+Fact 1. Can traverse the convex hull by making only counterclockwise turns.
+Fact 2. The vertices of convex hull appear in increasing order of polar angle with respect to point p with lowest y-coordinate.
+
+## Graham scan
+- Choose point p with smallest y-coordinate.
+- Sort points by polar angle with p.
+- Consider points in order; discard unless it create a ccw turn.
+
+## Graham scan: implementation challenges
+Q. How to find point p with smallest y-coordinate?
+A. Define a total order, comparing by y-coordinate. [next lecture]
+
+Q. How to sort points by polar angle with respect to p ?
+A. Define a total order for each point p. [next lecture]
+
+Q. How to determine whether p1 → p2 → p3 is a counterclockwise turn?
+A. Computational geometry. [next two slides]
+
+Q. How to sort efficiently?
+A. Mergesort sorts in N log N time. [next lecture]
+
+Q. How to handle degeneracies (three or more points on a line)?
+A. Requires some care, but not hard. [see booksite]
+
+## Implementing ccw
+CCW. Given three points a, b, and c, is a → b → c a counterclockwise turn?
+Determinant (or cross product) gives 2x signed area of planar triangle.
+- If signed area > 0, then a → b → c is counterclockwise.
+- If signed area < 0, then a → b → c is clockwise.
+- If signed area = 0, then a → b → c are collinear.
