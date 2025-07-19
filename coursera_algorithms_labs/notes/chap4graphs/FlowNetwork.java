@@ -16,9 +16,9 @@ public class FlowNetwork {
     }
 
     // construct flow network input stream
-    public FlowNetwork(In in, int v) {
-
-    }
+//    public FlowNetwork(In in, int v) {
+//
+//    }
 
 
 
