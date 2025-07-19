@@ -7,16 +7,18 @@ public class FlowEdge {
     private double flow;
 
     public FlowEdge(int v, int w, double capacity) {
-        this.v = v;
+        this.v = v;  // from vertex v to w
         this.w = w;
         this.capacity = capacity;
         this.flow=0.0;
     }
 
+    //vertex this edge points from
     public int from() {
         return v;
     }
 
+    //vertex this edge points to
     public int to() {
         return w;
     }
@@ -35,7 +37,9 @@ public class FlowEdge {
         else throw new RuntimeException("Illegal endpoint");
     }
 
-    /*
+    /* Residual capacity.
+    - Forward edge: residual capacity = ce - fe.
+    - Backward edge: residual capacity = fe.
     * Residual networks allow us to use graph search to find an augmenting path, since any path from source to sink
     in the residual network corresponds directly to an augmenting path in the original network.
     * */
@@ -46,6 +50,7 @@ public class FlowEdge {
 
     }
 
+    //add delta flow toward v
     public void addResidualFlowTo(int vertex, double delta) {
         if(vertex==v)flow -= delta;
         else if(vertex==w) flow+=delta;
