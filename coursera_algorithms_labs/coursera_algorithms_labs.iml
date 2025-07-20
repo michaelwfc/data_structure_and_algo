@@ -18,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Project10_BurrowsWheeler" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project8_BaseballElimination" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/assignments/EventBasedSimulation" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/assignments/ParallelJobscheduling" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

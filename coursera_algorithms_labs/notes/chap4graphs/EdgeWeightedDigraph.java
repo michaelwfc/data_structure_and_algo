@@ -5,7 +5,6 @@
 package chap4graphs;
 
 import edu.princeton.cs.algs4.Bag;
-import edu.princeton.cs.algs4.EdgeWeightedGraph;
 
 public class EdgeWeightedDigraph {
     private final int V;
@@ -19,13 +18,13 @@ public class EdgeWeightedDigraph {
     }
 
     // add edge e = v→w to only v's adjacency list
-    void addEdge(DirectedEdge e) {
+    public void addEdge(DirectedEdge e) {
         int v = e.from();
         adj[v].add(e);
 
     }
 
-    Iterable<DirectedEdge> adj(int v) {
+    public Iterable<DirectedEdge> adj(int v) {
         return adj[v];
     }
 

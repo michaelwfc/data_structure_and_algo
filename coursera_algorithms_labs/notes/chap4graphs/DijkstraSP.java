@@ -16,9 +16,9 @@ import chap2sorting.IndexMinPQ;
 import edu.princeton.cs.algs4.Stack;
 
 public class DijkstraSP {
-    private DirectedEdge[] edgeTo;
-    private double[] distTo;
-    private IndexMinPQ<Double> pq;
+    private DirectedEdge[] edgeTo; // last edge on shortest path from s to v
+    private double[] distTo;  // length of shortest path from s to v.
+    private IndexMinPQ<Double> pq; //Consider vertices in increasing order of distance from s
 
 
     public DijkstraSP(EdgeWeightedDigraph G, int s) {

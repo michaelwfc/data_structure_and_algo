@@ -104,7 +104,7 @@ public class SeamCarver {
                     distTo[i][j] = Double.POSITIVE_INFINITY;
             }
 
-            // Step 2: Relaxation from top to bottom
+            // Step 2: build shortest path from top to bottom
             for (int j = 0; j < height; j++)
                 for (int i = 0; i < width; i++) {
                     // The digraph is acyclic, where there is a downward edge from pixel (x, y) to pixels (x − 1, y + 1), (x, y + 1), and (x + 1, y + 1)
@@ -114,6 +114,8 @@ public class SeamCarver {
                         if (nextX >= 0 && nextX< this.width() && nextY >= 0 && nextY < this.height()) {
                             double energyValue = getEnergy(nextX,nextY, energyArray);
                             double newDist = distTo[i][j] + energyValue;
+                            // use Topological and relaxing the edges in the digraph
+                            // if the new distance is smaller than the current distance, update the distance and the path
                             if (newDist < distTo[nextX][nextY]) {
                                 distTo[nextX][nextY] = newDist; // update the minium energy
                                 edgeTo[nextX][nextY] = i;       //
@@ -132,7 +134,6 @@ public class SeamCarver {
                     minX = x;
                 }
             }
-
 
 
             // Step 4: Backtrack the seam with the minX
