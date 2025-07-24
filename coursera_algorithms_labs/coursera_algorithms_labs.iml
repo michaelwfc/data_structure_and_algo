@@ -6,19 +6,17 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Project10_BurrowsWheeler" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project1_Percolation" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project2_Queues" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project3_Sorting" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project4_8Puzzle" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project5_KDTrees" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project6_WordNet" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/notes" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project7_SeamCarving" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Project9_Boggle" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/Project10_BurrowsWheeler" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/Project8_BaseballElimination" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/assignments/EventBasedSimulation" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/assignments/ParallelJobscheduling" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Project9_Boggle" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/hello" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
