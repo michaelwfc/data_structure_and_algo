@@ -1,5 +1,5 @@
 {
-    "workbench.colorTheme": "Default Dark+",
+    "workbench.colorTheme": "Dark+",
     "files.autoSave": "onFocusChange",
     "terminal.integrated.defaultProfile.windows": "Git Bash",
     "java.jdt.ls.java.home": "C:\\Program Files\\Eclipse Adoptium\\jdk-11.0.27.6-hotspot\\", // Update this path to your JDK installation
