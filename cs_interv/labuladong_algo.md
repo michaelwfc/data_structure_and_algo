@@ -6,6 +6,8 @@
 # 1. 数据结构
 
 ## 1. 静态数组 vs 动态数组
+- https://labuladong.online/zh/algo/essential-technique/linked-list-skills-summary/
+ 
 
 我认为暂且可以把「数组」分为两大类，一类是「静态数组」，一类是「动态数组」。
 
@@ -119,3 +121,8 @@ int index = find(arr.begin(), arr.end(), 666) - arr.begin();
 ```
 
 # 2. 算法
+
+## tWO_pointers
+- https://labuladong.online/zh/algo/essential-technique/array-two-pointers-summary/
+- https://www.bilibili.com/video/BV1iG411W7Wm?spm_id_from=333.788.videopod.sections&vd_source=b3d4057adb36b9b243dc8d7a6fc41295
+ 

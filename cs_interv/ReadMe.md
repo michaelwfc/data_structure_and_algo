@@ -14,9 +14,3 @@
 
 - https://www.xiaolincoding.com/project/xiaolinnote.html
 - https://github.com/guocong-bincai/ai-interview-guide
-
-# labuladong Algo
-
-## 数据结构
-
-##
