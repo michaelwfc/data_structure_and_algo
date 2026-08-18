@@ -1,0 +1,7 @@
+// [
+//   {
+//     "directory": "/home/michael/projects/data_structure_and_algo",
+//     "command": "/usr/bin/clang++ -std=c++17 -Isrc -g src/two_pointers/167_TwoSumII_InputArrayIsSorted.cpp -o build/167_TwoSumII_InputArrayIsSorted",
+//     "file": "src/two_pointers/167_TwoSumII_InputArrayIsSorted.cpp"
+//   }
+// ]

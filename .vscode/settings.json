@@ -2,8 +2,9 @@
   // "C_Cpp.default.compilerPath": "/usr/bin/g++",
   "C_Cpp.default.compilerPath": "/usr/bin/clang++",
 
-  //  Disable Microsoft C/C++ IntelliSense when using clangd
-  "C_Cpp.intelliSenseEngine": "disabled",
+
+  // "C_Cpp.intelliSenseEngine": "default"   // Microsoft C/C++ IntelliSense
+  "C_Cpp.intelliSenseEngine": "disabled", //Disable Microsoft C/C++ IntelliSense when using clangd
 
   // === clangd for IntelliSense  === 
   "clangd.path": "/usr/bin/clangd",

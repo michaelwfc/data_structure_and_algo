@@ -8,13 +8,15 @@
         "-fdiagnostics-color=always",
         "-g", // debug symbols
         "${file}",
+        "${workspaceFolder}/src/utils/list_utils.cpp",
         // "-std=c++17",
         // "-Wall",
         // "-Wextra",
         // "-Wpedantic",
         "-o",
         "${workspaceFolder}/build/${fileBasenameNoExtension}",
-        "-lpthread"
+        "-lpthread",
+        "-I${workspaceFolder}/src", //Actual compiler header search path
       ],
       "group": {
         "kind": "build",

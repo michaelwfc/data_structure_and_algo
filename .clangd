@@ -1,0 +1,4 @@
+CompileFlags:
+  Add:
+    - -I/home/michael/projects/data_structure_and_algo/src
+    - -std=c++17

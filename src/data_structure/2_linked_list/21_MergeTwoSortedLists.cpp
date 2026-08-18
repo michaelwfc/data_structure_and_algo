@@ -35,37 +35,11 @@ Both list1 and list2 are sorted in non-decreasing order.
 #include <cassert>
 #include <iostream>
 #include <vector>
+#include "utils/list_utils.h"
+
 
 using namespace std;
 
-struct ListNode {
-  int val;
-  ListNode *next;
-  ListNode() : val(0), next(nullptr) {}
-  ListNode(int x) : val(x), next(nullptr) {}
-  ListNode(int x, ListNode *next) : val(x), next(next) {}
-};
-
-ListNode *createLinkedList(std::vector<int> arr) {
-  if (arr.empty()) {
-    return nullptr;
-  }
-
-  ListNode *head = new ListNode(arr[0]);
-  ListNode *current = head;
-  for (int i = 1; i < arr.size(); i++) {
-    current->next = new ListNode(arr[i]);
-    current = current->next;
-  }
-  return head;
-};
-
-void display(ListNode *list_node) {
-  for (ListNode *p = list_node; p != nullptr; p = p->next) {
-    std::cout << p->val << " -> ";
-  }
-  std::cout << "nullptr" << std::endl;
-}
 
 class Solution1 {
 public:
