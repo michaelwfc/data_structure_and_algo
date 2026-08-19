@@ -12,4 +12,6 @@ struct ListNode {
 
 ListNode *createLinkedList(std::vector<int> arr);
 
+ListNode *createCycleLinkedList(std::vector<int> arr, int pos);
+
 void display(ListNode *list_node);
