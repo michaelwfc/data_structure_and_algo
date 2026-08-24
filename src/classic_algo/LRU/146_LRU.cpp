@@ -154,6 +154,7 @@ Remove the node in the linked list -> remove the node in the hash table ?
 
 */
 #include <cstddef>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
@@ -170,9 +171,9 @@ template <typename K, typename V> struct Node {
   Node<K, V> *prev; // add previou link
   Node<K, V> *next;
   // this is the generic C++ way to value-initialize arbitrary template types.
-  Node() : key(K{}), val(V{}), prev(nullptr), next(nullptr) {}
-  Node(K key, V value) : key(key), val(value), prev(nullptr), next(nullptr) {}
-  Node(K key, V value, Node *next) : key(key), val(value), next(next) {}
+  Node() : key(K{}), val(V{}), bucket_next(nullptr), prev(nullptr), next(nullptr) {}
+  Node(K key, V value) : key(key), val(value), bucket_next(nullptr),prev(nullptr), next(nullptr) {}
+  Node(K key, V value, Node *next) : key(key), bucket_next(nullptr), val(value), next(next) {}
 };
 
 template <typename K, typename V> class LRUCache {
@@ -301,21 +302,19 @@ public:
     Node<K, V> *node = tail->prev; // get the LRU node :O(1)
     node->next->prev = node->prev;
     node->prev->next = node->next;
-    
-
 
     // move it from the hash table
     int index = hash(node->key) % m;
     Node<K, V> *buket_node = table[index];
 
     if (buket_node->key == node->key) {
-        // remove the buket_node
-        // buket_node = nullptr;
-        table[index] = nullptr;
+      // remove the buket_node
+      // buket_node = nullptr;
+      table[index] = nullptr;
     } else {
-        Node<K,V>* buket_pre = buket_node;
-        buket_node = buket_node->next;
-      while ( buket_node!= nullptr && buket_node->key != node->key ) {
+      Node<K, V> *buket_pre = buket_node;
+      buket_node = buket_node->next;
+      while (buket_node != nullptr && buket_node->key != node->key) {
         buket_pre = buket_node;
         buket_node = buket_node->next;
       }
@@ -332,8 +331,139 @@ public:
   }
 };
 
+
+
+// =========================================================
+
+template <typename K, typename V> class DoubleLinkedList {
+private:
+  Node<K, V> *head;
+  Node<K, V> *tail;
+  int size;
+
+public:
+  DoubleLinkedList<K, V>()
+      : size(0), head(new Node<K, V>()), tail(new Node<K, V>()) {
+
+    head->next = tail;
+    tail->prev = head;
+  };
+
+  void addToFront(Node<K, V> *node) {
+    node->next = head->next;
+    node->prev = head;
+
+    head->next->prev = node;
+    head->next = node;
+    size++;
+  };
+  Node<K, V> *removeAtLast() {
+    //protect against removing from an empty list.
+    if(tail->prev ==head){
+      return nullptr;
+    }
+
+    // move the node from Linked list
+    Node<K, V> *node = tail->prev; // get the LRU node :O(1)
+    node->next->prev = node->prev;
+    node->prev->next = node->next;
+    size--;
+    return node;
+  };
+
+  void moveToFront(Node<K, V> *node) {
+    // head ->  MRU ->   -> ...  node ->
+    node->next->prev = node->prev;
+    node->prev->next = node->next;
+
+    node->next = head->next;
+    node->prev = head;
+
+    head->next->prev = node;
+
+    head->next = node;
+  };
+};
+
+template <typename K, typename V> class LRUCache2 {
+private:
+  int capacity;
+  int size;
+  // The hash map tells you WHERE the node is. 
+  // The doubly linked list tells you WHERE the node ranks in recency.
+  unordered_map<int, Node<K, V> *> map; // unordered_map stores pair<const K, Node*>
+  DoubleLinkedList<K, V> list; 
+
+public:
+  LRUCache2<K, V>(int capacity)
+  :capacity(capacity),size(0),map(), list() // you don't need to explicitly initialize map and list; C++ will default-construct them:
+  {};
+
+  void put(K key, V value) {
+
+
+    Node<K, V> *node = new Node<K, V>(key, value);
+    // check whether the key exists:
+    auto item = map.find(key);
+    if(item!= map.end()){
+      // existing key
+      Node<K,V>* node = item->second;
+      node->val = value;
+      //move it to front
+      list.moveToFront(node);
+      return;
+
+    }
+
+    // add node to map
+    // map.insert(key);
+    map[key] = node;
+
+    // add to double linked list
+    list.addToFront(node);
+    size++;
+    if (size > capacity) {
+      evict();
+      
+    }
+  };
+
+  V get(K key) {
+    // check whether the key exists:
+    auto item = map.find(key);
+    if(item == map.end()){
+      return -1;
+    }
+
+    // get the node from hash table
+    // Node<K, V> *node = map.at(key);
+    Node<K,V>* node = item->second;
+
+    // move the node to front
+    list.moveToFront(node);
+    return node->val;
+  };
+
+  void evict() {
+    // get the last node from link
+    Node<K, V> *node = list.removeAtLast();
+
+    // delete it in hash map
+    map.erase(node->key);
+
+    // delte the memory
+    delete node;
+
+    size --;
+
+  }
+};
+
 int main() {
-  LRUCache<int, int> lRUCache(2);
+  // LRUCache<int, int> lRUCache(2);
+  cout<<"Test LRUCache2"<< endl;
+  LRUCache2<int, int> lRUCache(2);
+
   lRUCache.put(1, 1); // cache is {1=1}
 
   lRUCache.put(2, 2); // cache is {1=1, 2=2}
