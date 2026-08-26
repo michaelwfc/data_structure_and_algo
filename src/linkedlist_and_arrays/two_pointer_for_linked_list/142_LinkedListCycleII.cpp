@@ -48,7 +48,7 @@ Follow up: Can you solve it using O(1) (i.e. constant) memory?
  * };
  */
 
-#include "utils/list_utils.h"
+#include "linkedlist_and_arrays/list_utils.h"
 #include <cstddef>
 
 using namespace std;

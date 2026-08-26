@@ -35,7 +35,7 @@ Both list1 and list2 are sorted in non-decreasing order.
 #include <cassert>
 #include <iostream>
 #include <vector>
-#include "utils/list_utils.h"
+#include "linkedlist_and_arrays/list_utils.h"
 
 
 using namespace std;

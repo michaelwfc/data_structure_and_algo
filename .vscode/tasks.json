@@ -8,7 +8,8 @@
         "-fdiagnostics-color=always",
         "-g", // debug symbols
         "${file}",
-        "${workspaceFolder}/src/utils/list_utils.cpp",
+        // "${workspaceFolder}/src/linkedlist_and_arrays/list_utils.cpp",
+        "${workspaceFolder}/src/binary_trees/tree_utils.cpp",
         // "-std=c++17",
         // "-Wall",
         // "-Wextra",
