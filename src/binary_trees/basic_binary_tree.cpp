@@ -1,7 +1,10 @@
 /**
 https://labuladong.online/zh/algo/data-structure-basic/binary-tree-traverse-basic/
 https://leetcode.com/problems/binary-tree-preorder-traversal/description/
+https://leetcode.com/problems/binary-tree-inorder-traversal/description/
+https://leetcode.com/problems/binary-tree-postorder-traversal/description/
 
+https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 */
 
 #include <iostream>
@@ -78,15 +81,80 @@ vector<int> preorderTraversal(TreeNode* root){
   return v;
 };
 
+
+void inorder(TreeNode* root, vector<int> &v){
+  if(root==nullptr){
+    return;
+  }
+  // go to left subtree
+  inorder(root->left,v);
+  // handle the root node
+  v.push_back(root->val);
+  // go to right subtree
+  inorder(root->right, v);
+}
+
+vector<int> inorderTraversal(TreeNode* root){
+  vector<int> v={};
+  if(root==nullptr){
+    return v;
+  }
+  inorder(root,v);
+  return v;
+
+}
+
+void postorder(TreeNode* root, vector<int> &v){
+  if(root==nullptr){
+    return;
+  }
+  // go to left subtree
+  postorder(root->left,v);
+
+  // go to right subtree
+  postorder(root->right, v);
+
+  // handle the root node
+  v.push_back(root->val);
+}
+
+
+
+vector<int> postorderTraversal(TreeNode* root){
+  vector<int> v={};
+  if(root==nullptr){
+    return v;
+  }
+  postorder(root,v);
+  return v;
+}
+
+
+
+
+
+void printVector(vector<int> &v, string order){
+    cout<<order <<" " << "tranversal:"<< endl;
+    for(size_t i=0;i< v.size();i++){
+      cout<< v[i]<<" ";
+    }
+    cout<<endl;
+}
+
 int main() {
   // vector<optional<int>> v = {1, nullopt, 2, 3};
   vector<optional<int>> v = {1,2,3,4,5,nullopt,8,nullopt,nullopt,6,7,9};
-
   TreeNode *root = createTree(v);
+  vector<int> preorder_output = preorderTraversal(root);
+  printVector(preorder_output, "preorder");
 
-  vector<int> output = preorderTraversal(root);
-  for(size_t i=0;i<output.size();i++){
-    cout<< output[i]<<" ";
-  }
-  cout<<endl;
+  vector<int> inorder_output = inorderTraversal(root);
+  printVector(inorder_output, "inorder");
+
+  vector<int> postorder_output = postorderTraversal(root);
+  printVector(postorder_output, "postorder");
+  
+
+
+
 }
