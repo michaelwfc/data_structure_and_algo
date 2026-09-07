@@ -6,26 +6,38 @@ https://leetcode.com/problems/binary-tree-postorder-traversal/description/
 
 https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
+# Binary Tree
+A binary tree is either:
+・Empty.
+・Two disjoint binary trees (left and right).
 
-### 满二叉树  Perfect Binary Tree
 
-### 完全二叉树 Complete Binary Tree
-完全二叉树是指，二叉树的每一层的节点都紧凑靠左排列，且除了最后一层，其他每层都必须是满的：
+# 二叉搜索树（Binary Search Tree，简称 BST）
+Definition. A BST is a binary tree in symmetric order.
 
-
-### 二叉搜索树（Binary Search Tree，简称 BST）
-是一种很常见的二叉树，它的定义是：
+Symmetric order. Each node has a key,
+and every node’s key is:
+・Larger than all keys in its left subtree.
+・Smaller than all keys in its right subtree.
 
 对于树中的每个节点，其左子树的每个节点的值都要小于这个节点的值，右子树的每个节点的值都要大于这个节点的值。你可以简单记为「左小右大」。
 
 
-### 高度平衡二叉树（Height-Balanced Binary Tree）
+# 满二叉树  Perfect Binary Tree
+
+# 完全二叉树 Complete Binary Tree
+完全二叉树是指，二叉树的每一层的节点都紧凑靠左排列，且除了最后一层，其他每层都必须是满的：
+
+
+
+
+# 高度平衡二叉树（Height-Balanced Binary Tree）
 是一种特殊的二叉树，它的「每个节点」的左右子树的高度差不超过 1。
 
 要注意是每个节点，而不仅仅是根节点。
 
 
-### 自平衡二叉树（Self-Balanced Binary Tree）
+# 自平衡二叉树（Self-Balanced Binary Tree）
 
 二叉搜索树的操作效率取决于树高，树结构越平衡，树高就接近 logN，增删查改的效率就比较高。而普通二叉搜索树最关键的问题是它不会自动对树进行平衡，特殊的情况下会退化成链表，增删查改的时间复杂度退化为 O(N)。
 
@@ -35,7 +47,7 @@ https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
 保持树的平衡性，最关键的就是「旋转」操作 
 
-### 红黑树
+# 红黑树
 
 红黑树是自平衡的二叉搜索树，它的树高在任何时候都能保持在 O(logN)（完美平衡），这样就能保证增删查改的时间复杂度都是 O(logN)。
 

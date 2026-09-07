@@ -81,6 +81,9 @@ public:
     // precondition
     // assert left is sorted
     // assert right is sorted
+    if(nums[mid-1]<nums[mid]){
+        return;
+    }
 
     // copy the nums to aux
     for (int i = start; i < end; i++) {
@@ -106,19 +109,42 @@ public:
 
     // postcondtion
   }
+
+  /**
+  Basic plan.
+・Pass through array, merging subarrays of size 2: [0,2),[2,3),....
+・Repeat for subarrays of size 4, 8, 16, ....
+  */
+  vector<int> mergeBU(vector<int> nums){
+    size_t N = nums.size();
+    vector<int> aux(N);
+    size_t size=2;
+    while(size<=N){
+        // for loop for each subarray from 2 to 4, 8
+        for(int start=0; start< N;start+=size)
+        {   
+            merge(nums, aux, start, start + size/2, start+ size);
+        }
+        // double size
+        size = 2*size;
+    }
+    return nums;
+
+  }
 };
 
 int main() {
   MergeSort merge_sort = MergeSort();
   vector<int> nums = {5, 2, 3, 1};
   vector<int> expected = {1, 2, 3, 5};
-  vector<int> output = merge_sort.sortV1(nums);
+  // vector<int> output = merge_sort.sortV1(nums);
+  vector<int> output = merge_sort.mergeBU(nums);
+  printArrary(output);
   assert(output == expected);
 
   vector<int> nums2 = {5,1,1,2,0,0};
   vector<int> expected2 = {0,0,1,1,2,5};
   vector<int> output2 = merge_sort.sortV1(nums2);
   assert(output2 == expected2);
-  
   printArrary(output2);
 }
