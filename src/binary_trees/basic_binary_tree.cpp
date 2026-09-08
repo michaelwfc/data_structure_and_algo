@@ -256,7 +256,24 @@ void printVectorOfV(const vector<vector<int>> &v, const string order) {
 };
 
 int main() {
+  /**
+                  1
+                /   \
+                     2
+                   /  \
+                  3
+  */
   // vector<optional<int>> v = {1, nullopt, 2, 3};
+
+  /**
+                   1
+                /    \
+               2      3
+             /  \    /   \
+            4    5        8
+                /  \     /
+              6     7   9
+  */
   vector<optional<int>> v = {1, 2,       3,       4, 5, nullopt,
                              8, nullopt, nullopt, 6, 7, 9};
   TreeNode *root = createTree(v);

@@ -71,9 +71,9 @@ public:
     Node<K, V> *current_node = root;
     while (current_node != nullptr) {
       K current_key = current_node->key;
-      if (current_key == key) {
+      if (key == current_key) {
         return current_node->value;
-      } else if (current_key < key) {
+      } else if (key > current_key) {
         current_node = current_node->right;
       } else {
         current_node = current_node->left;
@@ -83,13 +83,15 @@ public:
   };
 
   /**
-Associate value with key
+
+  Associate value with key
 search for key, then two cases:
 - key in tree     -> reset value
 - key not in tree -> add new node
 
+Iterative method
 */
-  void put(K key, V value) {
+  void put1(K key, V value) {
     if (root == nullptr) {
       root = new Node<K, V>(key, value);
       return;
@@ -100,11 +102,11 @@ search for key, then two cases:
     size_t left_or_right;
     while (current_node != nullptr) {
       K current_key = current_node->key;
-      if (current_key == key) {
+      if (key == current_key) {
         // case1: reset value
         current_node->value = value;
         return;
-      } else if (current_key < key) {
+      } else if (key > current_key) {
         last_node = current_node;
         current_node = current_node->right;
         left_or_right = 0;
@@ -125,10 +127,45 @@ search for key, then two cases:
     return;
   }
 
+  // recursive BST insertion
+
+  void put(K key, V value) { root = put(root, key, value); }
+
+  // Don't think: "This function inserts a node."
+  // Think: Insert (key, value) into the subtree rooted at n, and return the
+  // root of the resulting subtree. “I don't need to insert it myself. I know
+  // which subtree it belongs to. I'll ask that subtree to insert it.”
+  Node<K, V> *put(Node<K, V> *n, K key, V value) {
+    // n represents a subtree
+
+    if (n == nullptr) {
+      // 1. Empty subtree: create a new node
+      Node<K, V> *new_node = new Node<K, V>(key, value);
+      return new_node;
+    }
+
+    if (n->key == key) {
+      // 2. Key already exists: update value
+      n->value = value;
+      return n;
+    } else if (key > n->key) {
+      // 3. Key is larger: insert into right subtree
+      //  Down the tree → find the position.
+      // Back up the tree → reconnect the subtree.
+
+      n->right = put(n->right, key, value);
+    } else {
+      // 4. Key is smaller: insert into left subtree
+      n->left = put(n->left, key, value);
+    }
+    // 5. Return root of this subtree
+    return n;
+  }
+
   //   void delete(K key){}; // delete is C++ keyword
   void remove(K key) {};
 
-  //   Iteratable<K> iteretor() {}
+  //   Iteratable<K> iteretor() {} // Java
   // Instead, C++ uses the iterator protocol.
   // iterator begin();
   // iterator end();
@@ -145,6 +182,14 @@ BST<K, V> create_bst(vector<pair<K, V>> &pairs) {
 }
 
 int main() {
+  /*
+                    5
+                  /   \
+                 3     8
+                / \   / \
+               1   4 6   9
+
+  */
   vector<pair<int, string>> data = {{5, "five"}, {3, "three"}, {8, "eight"},
                                     {1, "one"},  {4, "four"},  {6, "six"},
                                     {9, "nine"}};
