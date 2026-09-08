@@ -18,6 +18,7 @@ A Node is comprised of four fields:
 ・A reference to the left and right subtree.
 
 */
+#include <algorithm>
 #include <iostream>
 #include <optional>
 #include <string>
@@ -33,11 +34,12 @@ template <typename K, typename V> class Node {
 public:
   K key;
   V value;
-  Node *left;  // BST with smaller keys
-  Node *right; // BST with larger keys
+  Node *left;   // BST with smaller keys
+  Node *right;  // BST with larger keys
+  size_t count; // subtree count
 
   Node(K key, V value)
-      : key(key), value(value), left(nullptr), right(nullptr) {}
+      : key(key), value(value), left(nullptr), right(nullptr), count(1) {}
 
   //   V get_value() { return this->value; };
 
@@ -55,8 +57,6 @@ public:
 };
 
 template <typename K, typename V> class BST {
-private:
-  Node<K, V> *root;
 
 public:
   // root can be empty
@@ -64,23 +64,14 @@ public:
 
   // binary search
   optional<V> get(const K &key) {
-    if (root == nullptr) {
+    Node<K, V> *n = _get_node(key);
+    if (n == nullptr) {
       return nullopt;
     }
-
-    Node<K, V> *current_node = root;
-    while (current_node != nullptr) {
-      K current_key = current_node->key;
-      if (key == current_key) {
-        return current_node->value;
-      } else if (key > current_key) {
-        current_node = current_node->right;
-      } else {
-        current_node = current_node->left;
-      }
-    }
-    return nullopt;
+    return n->value;
   };
+
+  Node<K, V> *get_node(K &key) { return _get_node(key); }
 
   /**
 
@@ -128,10 +119,59 @@ Iterative method
   }
 
   // recursive BST insertion
+  void put(K key, V value) { root = put(root, key, value); }
 
-  void put(K key, V value) { 
-    root = put(root, key, value); 
-}
+  size_t size() {
+    // use recureive to get size, which can handle when node is nullptr
+    size_t count = size(root);
+    return count;
+  }
+
+  /**
+     Floor. Largest key ≤ a given key.
+     Ceiling. Smallest key ≥ a given key.
+  */
+  optional<K> floor(K key) {
+    Node<K, V> *n = floor(root, key);
+    if (n == nullptr) {
+      return nullopt;
+    } else {
+      return n->key;
+    }
+  }
+
+  optional<K> ceiling() {}
+
+  //   void delete(K key){}; // delete is C++ keyword
+  void remove(K key) {}
+
+  //   Iteratable<K> iteretor() {} // Java
+  // Instead, C++ uses the iterator protocol.
+  // iterator begin();
+  // iterator end();
+
+private:
+  Node<K, V> *root;
+
+  // binary search
+  Node<K, V> *_get_node(const K &key) {
+    if (root == nullptr) {
+      return nullptr;
+    }
+
+    Node<K, V> *current_node = root;
+    while (current_node != nullptr) {
+      K current_key = current_node->key;
+      if (key == current_key) {
+        return current_node;
+      } else if (key > current_key) {
+        current_node = current_node->right;
+      } else {
+        current_node = current_node->left;
+      }
+    }
+    return current_node;
+  };
 
   // Don't think: "This function inserts a node."
   // Think: Insert (key, value) into the subtree rooted at n, and return the
@@ -143,6 +183,7 @@ Iterative method
     if (n == nullptr) {
       // 1. Empty subtree: create a new node
       Node<K, V> *new_node = new Node<K, V>(key, value);
+      new_node->count = 1;
       return new_node;
     }
 
@@ -151,25 +192,55 @@ Iterative method
       n->value = value;
     } else if (key > n->key) {
       // 3. Key is larger: insert into right subtree
-      //  Down the tree → find the position.
+      // Down the tree → find the position.
       // Back up the tree → reconnect the subtree.
-
       n->right = put(n->right, key, value);
     } else {
       // 4. Key is smaller: insert into left subtree
       n->left = put(n->left, key, value);
     }
     // 5. Return root of this subtree
+    // if (n->left != nullptr) {
+    //   n->count += n->left->count;
+    // }
+    // if (n->right != nullptr) {
+    //   n->count += n->right->count;
+    // }
+    n->count = 1+ size(n->left) + size(n->right);
+
     return n;
   }
 
-  //   void delete(K key){}; // delete is C++ keyword
-  void remove(K key) {};
+  size_t size(Node<K, V> *n) {
+    if (n == nullptr) {
+      return 0;
+    } else {
+      return n->count;
+    }
+  }
 
-  //   Iteratable<K> iteretor() {} // Java
-  // Instead, C++ uses the iterator protocol.
-  // iterator begin();
-  // iterator end();
+  Node<K, V> *floor(Node<K, V> *n, K key) {
+    if (n == nullptr) {
+      return nullptr;
+    }
+
+    if (key == n->key) {
+      return n;
+    } else if (key < n->key) {
+      // floor is largest key <=given key, so floor < n->key , floor is in the
+      // left subtree
+      return floor(n->left, key);
+    }
+
+    // on the right
+    // find the floor  in the right subtree
+    Node<K, V> *t = floor(n->right, key);
+    if (t != nullptr) {
+      return t;
+    } else {
+      return n;
+    }
+  }
 };
 
 // create a bst from a list of key, value pairs
@@ -197,11 +268,27 @@ int main() {
 
   BST<int, string> bst = create_bst(data);
 
-  int key = 10;
-  optional<string> value = bst.get(key);
-  if (value.has_value()) {
-    cout << "when key = " << key << " , value = " << *value << endl;
+  int key = 5;
+  //   optional<string> value = bst.get(key);
+  Node<int, string> *n = bst.get_node(key);
+
+  //   if (value.has_value()) {
+  //     cout << "when key = " << key << " , value = " << *value << endl;
+  //   } else {
+  //     cout << "when key = " << key << " , key not found" << endl;
+  //   }
+
+  if (n != nullptr) {
+    cout << "when key = " << key << " , value = " << n->value << " , count = " << n->count << endl;
   } else {
     cout << "when key = " << key << " , key not found" << endl;
+  }
+
+  int key2 = 8;
+  optional<int> floor_key = bst.floor(key2);
+  if (floor_key.has_value()) {
+    cout << "when key = " << key2 << " , floor_key = " << *floor_key << endl;
+  } else {
+    cout << "when key = " << key2 << " , floor_key not found" << endl;
   }
 }
