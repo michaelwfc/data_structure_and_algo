@@ -129,7 +129,9 @@ Iterative method
 
   // recursive BST insertion
 
-  void put(K key, V value) { root = put(root, key, value); }
+  void put(K key, V value) { 
+    root = put(root, key, value); 
+}
 
   // Don't think: "This function inserts a node."
   // Think: Insert (key, value) into the subtree rooted at n, and return the
@@ -147,7 +149,6 @@ Iterative method
     if (n->key == key) {
       // 2. Key already exists: update value
       n->value = value;
-      return n;
     } else if (key > n->key) {
       // 3. Key is larger: insert into right subtree
       //  Down the tree → find the position.
