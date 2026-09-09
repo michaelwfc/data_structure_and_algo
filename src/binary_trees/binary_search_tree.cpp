@@ -19,6 +19,7 @@ A Node is comprised of four fields:
 
 */
 #include <algorithm>
+#include <cstddef>
 #include <iostream>
 #include <optional>
 #include <string>
@@ -34,8 +35,8 @@ template <typename K, typename V> class Node {
 public:
   K key;
   V value;
-  Node *left;   // BST with smaller keys
-  Node *right;  // BST with larger keys
+  Node<K,V> *left;   // BST with smaller keys
+  Node<K,V> *right;  // BST with larger keys
   size_t count; // subtree count
 
   Node(K key, V value)
@@ -142,13 +143,21 @@ Iterative method
 
   optional<K> ceiling() {}
 
-  //   void delete(K key){}; // delete is C++ keyword
-  void remove(K key) {}
+  /**
+  Rank: how many keys < k ?
+  */
+  size_t rank(K key) { return rank(root, key); }
 
-  //   Iteratable<K> iteretor() {} // Java
+  // Iteratable<K> iteretor() {} // Java
   // Instead, C++ uses the iterator protocol.
   // iterator begin();
   // iterator end();
+
+
+  //   void delete(K key){}; // delete is C++ keyword
+  void remove(K key) {}
+
+
 
 private:
   Node<K, V> *root;
@@ -206,7 +215,7 @@ private:
     // if (n->right != nullptr) {
     //   n->count += n->right->count;
     // }
-    n->count = 1+ size(n->left) + size(n->right);
+    n->count = 1 + size(n->left) + size(n->right);
 
     return n;
   }
@@ -239,6 +248,22 @@ private:
       return t;
     } else {
       return n;
+    }
+  }
+
+  size_t rank(Node<K, V> *n, K key) {
+    if (n == nullptr) {
+      return 0;
+    }
+    if (key== n->key){
+        return size(n->left);
+    }
+    else if (key > n->key) {
+      // whe key > current root key, count cuurent root key + size of left subtree +  search  substree
+      return 1 + size(n->left) + rank(n->right,key);
+    } else {
+      // whe key < current root key
+      return rank(n->left, key) ;
     }
   }
 };
@@ -279,7 +304,8 @@ int main() {
   //   }
 
   if (n != nullptr) {
-    cout << "when key = " << key << " , value = " << n->value << " , count = " << n->count << endl;
+    cout << "when key = " << key << " , value = " << n->value
+         << " , count = " << n->count << endl;
   } else {
     cout << "when key = " << key << " , key not found" << endl;
   }
@@ -291,4 +317,8 @@ int main() {
   } else {
     cout << "when key = " << key2 << " , floor_key not found" << endl;
   }
+
+  int key3= 7;
+  size_t r = bst.rank(key3);
+  cout << "when key = " << key3 << " , rank = " << r << endl;
 }
