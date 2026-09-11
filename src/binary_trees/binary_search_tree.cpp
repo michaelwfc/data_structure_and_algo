@@ -25,6 +25,7 @@ A Node is comprised of four fields:
 #include <string>
 #include <utility>
 #include <vector>
+#include <queue>
 
 // #include <iterator>
 
@@ -148,10 +149,14 @@ Iterative method
   */
   size_t rank(K key) { return rank(root, key); }
 
-  // Iteratable<K> iteretor() {} // Java
-  // Instead, C++ uses the iterator protocol.
-  // iterator begin();
-  // iterator end();
+  // Property. Inorder traversal of a BST yields keys in ascending order.
+  vector<K> inorder(){
+    // use recursive method
+    vector<K> v = {};
+    inorder(root,v);
+    return v;
+  }  
+
 
 
   //   void delete(K key){}; // delete is C++ keyword
@@ -266,6 +271,18 @@ private:
       return rank(n->left, key) ;
     }
   }
+
+  void inorder(Node<K,V>* n, vector<K> &v){
+    if(n==nullptr){
+        return;
+    }
+     // traversal in left subtree
+    inorder(n->left, v);
+    // get the key for the 
+    v.push_back(n->key);
+    // traversal in right subtree
+    inorder(n->right,v);
+  }
 };
 
 // create a bst from a list of key, value pairs
@@ -321,4 +338,14 @@ int main() {
   int key3= 7;
   size_t r = bst.rank(key3);
   cout << "when key = " << key3 << " , rank = " << r << endl;
+
+
+  vector<int> output = bst.inorder();
+  cout<< "inorder transvers:" << endl;
+  for(auto it: output){
+    cout<< it << " -> ";
+  }
+  cout<< endl;
+
+
 }
