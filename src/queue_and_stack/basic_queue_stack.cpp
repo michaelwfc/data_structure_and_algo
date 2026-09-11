@@ -18,7 +18,7 @@ public:
   void push(const E &e) {};
 
   // 查看队头元素，时间复杂度 O(1)
-  E peek() const;
+  E front() const; // peek in java
 
   // 从队头删除元素，时间复杂度 O(1)
   E pop();
@@ -59,7 +59,7 @@ public:
   }
 
   // 在对头查看数据
-  E peek() const{
+  E front() const{
     return _list.front();
   }
 
