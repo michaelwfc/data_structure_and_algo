@@ -2,6 +2,8 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
+#include <map>
+
 
 using namespace std;
 
@@ -57,4 +59,25 @@ void display(ListNode *list_node) {
     std::cout << p->val << " -> ";
   }
   std::cout << "nullptr" << std::endl;
+}
+
+
+
+
+
+
+map<char, int> init_count_char() {
+  map<char, int> count;
+  for (int i = 0; i < 26; i++) {
+    count['a' + i] = 0;
+  }
+  return count;
+}
+
+map<char, int> count_char(string s) {
+  map<char, int> count = init_count_char();
+  for (char c : s) {
+    count[c]++;
+  }
+  return count;
 }

@@ -1,6 +1,8 @@
 #include <cassert>
 #include <iostream>
 #include <vector>
+#include <map>
+
 
 using namespace std;
 
@@ -27,3 +29,9 @@ void printArrary(vector<T> v){
   }
   cout <<endl;
 }
+
+
+
+map<char, int> init_count_char();
+
+map<char, int> count_char(string s);

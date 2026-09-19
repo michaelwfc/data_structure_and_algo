@@ -1,5 +1,6 @@
 /**
 https://leetcode.com/problems/permutations/description/
+https://labuladong.online/zh/algo/essential-technique/backtrack-framework/
 
 46. Permutations
 Medium
@@ -328,7 +329,42 @@ public:
   }
 
 private:
-  // generate the next character.
+/**
+https://labuladong.online/zh/algo/essential-technique/backtrack-vs-dfs/
+回溯算法核心框
+  void backtrack(...) {
+    if (reached the leaf node) {
+        // 到达叶子节点，结束递归
+        
+        return;
+    }
+
+    for (int i = 0; i < n; i++) {
+        // Do 
+        ...
+
+        backtrack(...)
+
+        // Undo
+        ...
+    }
+}
+
+
+回溯可以理解成： DFS + 对路径/状态进行修改和恢复。
+回溯通常是 DFS 的一种应用方式。 DFS 描述的是搜索顺序；backtracking 描述的是搜索过程中如何维护和恢复状态。
+
+| | DFS | 回溯 |
+|---|---|---|
+| 本质 | 深度优先遍历 | DFS + 状态管理 |
+| 是否一定修改状态 | 不一定 | 通常需要 |
+| 是否需要撤销 | 不一定 | 通常需要 |
+| 是否经常出现 `path` | 不一定 | 非常常见 |
+| 常见用途 | 遍历、搜索 | 排列、组合、子集、N 皇后 |
+| 核心 | 往深处走 | 做选择 → 深入 → 撤销 |
+
+
+  */
   void backtrack(const string & s, string &current, vector<bool> &used,
                  vector<string> &results) {
     size_t string_size = s.size();
@@ -341,7 +377,7 @@ private:
     for (int i = 0; i < string_size; i++) {
       // if not used add to current path
       if (!used[i]) {
-        //choose
+        // do
         current.push_back(s[i]);
         used[i] = true; // mark position i used
         
